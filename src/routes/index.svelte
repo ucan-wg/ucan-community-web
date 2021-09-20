@@ -11,7 +11,7 @@
     StructuredListRow,
     StructuredListCell,
     StructuredListBody,
-    TextArea,
+    TextArea
   } from 'carbon-components-svelte';
 
   import { onMount } from 'svelte';
@@ -50,9 +50,10 @@
   };
 
   const showExample = () => {
-    encodedUcan = 'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVhdiI6IjAuNy4wIn0=.eyJhdWQiOiJkaWQ6a2V5Ono2TWt2SmR2OFZaYjZoRWlxcktOWHJ4bm02bnJ5akZxVlVoUTd6aWdxTVF4d1doTCIsImF0dCI6W3sid25mcyI6ImRlbW91c2VyLmZpc3Npb24ubmFtZS9wdWJsaWMvcGhvdG9zLyIsImNhcCI6Ik9WRVJXUklURSJ9XSwiZXhwIjoxNjMyMTU3ODMwLCJpc3MiOiJkaWQ6a2V5Ono2TWtybUZTQkx5Q3V1M2hFMUNNeWpkbUZlYjlxMUduS0V4dWJLenNRMWE0Z2l4WCIsIm5iZiI6MTYzMjE1Nzc0MCwicHJmIjpudWxsfQ==.wTz81twQVFDZHN9kxXYIfNXKq7nEQztE6rKvRxnpJ58qvfDSRoYYr_mxJ1D8xzJMudsR9Bx-CjzlHGxI_IgzBg==';
-    decode({target: { value: encodedUcan}});
-  }
+    encodedUcan =
+      'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVhdiI6IjAuNy4wIn0=.eyJhdWQiOiJkaWQ6a2V5Ono2TWt2SmR2OFZaYjZoRWlxcktOWHJ4bm02bnJ5akZxVlVoUTd6aWdxTVF4d1doTCIsImF0dCI6W3sid25mcyI6ImRlbW91c2VyLmZpc3Npb24ubmFtZS9wdWJsaWMvcGhvdG9zLyIsImNhcCI6Ik9WRVJXUklURSJ9XSwiZXhwIjoxNjMyMTU3ODMwLCJpc3MiOiJkaWQ6a2V5Ono2TWtybUZTQkx5Q3V1M2hFMUNNeWpkbUZlYjlxMUduS0V4dWJLenNRMWE0Z2l4WCIsIm5iZiI6MTYzMjE1Nzc0MCwicHJmIjpudWxsfQ==.wTz81twQVFDZHN9kxXYIfNXKq7nEQztE6rKvRxnpJ58qvfDSRoYYr_mxJ1D8xzJMudsR9Bx-CjzlHGxI_IgzBg==';
+    decode({ target: { value: encodedUcan } });
+  };
 
   $: {
     ucan
@@ -84,11 +85,11 @@
       </Column>
     </Row>
     {#if encodedUcan === ''}
-    <Row>
-      <Column>
-        <Button on:click={showExample}>Show Example UCAN</Button>
-      </Column>
-    </Row>
+      <Row>
+        <Column>
+          <Button on:click={showExample}>Show Example UCAN</Button>
+        </Column>
+      </Row>
     {/if}
   </Column>
   <Column>
@@ -124,7 +125,6 @@
   </Column>
 </Row>
 
-
 {#if !isValid && encodedUcan !== ''}
   <Row>
     <Column>
@@ -152,8 +152,13 @@
         <Row>
           <Column>
             Please see the
+            <Link href="https://datatracker.ietf.org/doc/html/rfc7519" target="_blank">
+              JWT RFC
+            </Link>
+            and the
             <Link
               href="https://whitepaper.fission.codes/access-control/ucan/jwt-authentication"
+              target="_blank"
             >
               UCAN specification
             </Link>
@@ -166,6 +171,7 @@
               <StructuredListHead>
                 <StructuredListRow head>
                   <StructuredListCell head>Field</StructuredListCell>
+                  <StructuredListCell head>Long Name</StructuredListCell>
                   <StructuredListCell head>Value</StructuredListCell>
                   <StructuredListCell head>Details</StructuredListCell>
                 </StructuredListRow>
@@ -174,6 +180,9 @@
                 {#each ucan.headerFields(decodedUcan) as row}
                   <StructuredListRow>
                     <StructuredListCell noWrap>{row.field}</StructuredListCell>
+                    <StructuredListCell noWrap
+                      >{row.longName}</StructuredListCell
+                    >
                     <StructuredListCell>{row.value}</StructuredListCell>
                     <StructuredListCell>
                       {row.details}
@@ -183,6 +192,9 @@
                 {#each ucan.payloadFields(decodedUcan) as row}
                   <StructuredListRow>
                     <StructuredListCell noWrap>{row.field}</StructuredListCell>
+                    <StructuredListCell noWrap
+                      >{row.longName}</StructuredListCell
+                    >
                     <StructuredListCell>{row.value}</StructuredListCell>
                     <StructuredListCell>
                       {row.details}

@@ -24,6 +24,7 @@ export const headerFields = (token: Ucan) => {
     const ucv = token.header.uav ?
       [{
         field: 'ucv',
+        longName: 'UCAN Version',
         value: token.header.uav,
         details: 'The UCAN version'
       }] : []
@@ -31,13 +32,15 @@ export const headerFields = (token: Ucan) => {
     return [
       {
         field: 'alg',
+        longName: 'Signature Algorithm',
         value: token.header.alg,
         details: 'The algorithm used to sign the UCAN'
       },
       {
         field: 'typ',
+        longName: 'Type',
         value: token.header.typ,
-        details: 'The token type. UCANs are JWTs'
+        details: 'UCANs are JWTs'
       },
       ...ucv
     ]
@@ -59,6 +62,7 @@ export const payloadFields = (token: Ucan) => {
 
         return ({
           field: 'att',
+          longName: 'Attenuation',
           value: `${att.cap}, ${resource[0]}: ${resource[1]} `,
           details: 'A capability granted on a resource to the audience'
         })
@@ -67,6 +71,7 @@ export const payloadFields = (token: Ucan) => {
     const notBefore = token.payload.nbf ?
       [{
         field: 'nbf',
+        longName: 'Not Before',
         value: token.payload.nbf,
         details: 'The UNIX time after which the UCAN is valid'
       }] : []
@@ -74,6 +79,7 @@ export const payloadFields = (token: Ucan) => {
       const facts = token.payload.fct ?
       [{
         field: 'fct',
+        longName: 'Facts',
         value: token.payload.fct,
         details: 'Extra facts or information attached to the UCAN'
       }] : []
@@ -81,6 +87,7 @@ export const payloadFields = (token: Ucan) => {
     return [
       {
         field: 'aud',
+        longName: 'Audience',
         value: token.payload.aud,
         details: 'The DID of the audience'
       },
@@ -88,17 +95,20 @@ export const payloadFields = (token: Ucan) => {
       ...facts,
       {
         field: 'exp',
+        longName: 'Expires At',
         value: token.payload.exp,
         details: 'The UNIX time when the UCAN expires'
       },
       {
         field: 'iss',
+        longName: 'Issuer',
         value: token.payload.iss,
         details: 'The DID of the issuer. The UCAN must be signed with the private key of the issuer to be valid.'
       },
       ...notBefore,
       {
         field: 'prf',
+        longName: 'UCAN Proofs',
         value: token.payload.prf,
         details: 'The proof chain of nested tokens with equal or greater authority to grant the capabilities'
       },
