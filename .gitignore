@@ -1,0 +1,9 @@
+# node
+node_modules/
+
+# svelte
+.svelte-kit/
+build/
+
+# macOS
+.DS_Store
