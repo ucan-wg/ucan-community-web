@@ -76,13 +76,21 @@ export const payloadFields = (token: Ucan) => {
         details: 'The UNIX time after which the UCAN is valid'
       }] : []
 
-      const facts = token.payload.fct ?
+    const facts = token.payload.fct ?
       [{
         field: 'fct',
         longName: 'Facts',
         value: token.payload.fct,
         details: 'Extra facts or information attached to the UCAN'
       }] : []
+
+    const proofs =
+      [{
+        field: 'prf',
+        longName: 'UCAN Proofs',
+        value: token.payload.prf ? "Select Show Proof to inspect the next UCAN in the chain" : token.payload.prf,
+        details: 'The proof chain of nested UCANs with equal or greater authority to grant the capabilities'
+      }]
 
     return [
       {
@@ -106,12 +114,7 @@ export const payloadFields = (token: Ucan) => {
         details: 'The DID of the issuer. The UCAN must be signed with the private key of the issuer to be valid.'
       },
       ...notBefore,
-      {
-        field: 'prf',
-        longName: 'UCAN Proofs',
-        value: token.payload.prf,
-        details: 'The proof chain of nested tokens with equal or greater authority to grant the capabilities'
-      },
+      ...proofs,
       // ...nonce
     ]
   } else {

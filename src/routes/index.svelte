@@ -11,7 +11,6 @@
     StructuredListRow,
     StructuredListCell,
     StructuredListBody,
-    ToastNotification,
     TextArea
   } from 'carbon-components-svelte';
 
@@ -52,9 +51,16 @@
 
   const showExample = () => {
     encodedUcan =
-      'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVhdiI6IjAuNy4wIn0=.eyJhdWQiOiJkaWQ6a2V5Ono2TWt2SmR2OFZaYjZoRWlxcktOWHJ4bm02bnJ5akZxVlVoUTd6aWdxTVF4d1doTCIsImF0dCI6W3sid25mcyI6ImRlbW91c2VyLmZpc3Npb24ubmFtZS9wdWJsaWMvcGhvdG9zLyIsImNhcCI6Ik9WRVJXUklURSJ9XSwiZXhwIjoxNjMyMTU3ODMwLCJpc3MiOiJkaWQ6a2V5Ono2TWtybUZTQkx5Q3V1M2hFMUNNeWpkbUZlYjlxMUduS0V4dWJLenNRMWE0Z2l4WCIsIm5iZiI6MTYzMjE1Nzc0MCwicHJmIjpudWxsfQ==.wTz81twQVFDZHN9kxXYIfNXKq7nEQztE6rKvRxnpJ58qvfDSRoYYr_mxJ1D8xzJMudsR9Bx-CjzlHGxI_IgzBg==';
+    'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVhdiI6IjAuNy4wIn0=.eyJhdWQiOiJkaWQ6a2V5Ono2TWtnWUdGM3RobjhrMUZ2NHA0ZFdYS3RzWENuTEg3cTl5dzRRZ05QVUxEbURLQiIsImF0dCI6W3sid25mcyI6ImRlbW91c2VyLmZpc3Npb24ubmFtZS9wdWJsaWMvcGhvdG9zLyIsImNhcCI6Ik9WRVJXUklURSJ9XSwiZXhwIjoxNjMyMjM5NTYwLCJpc3MiOiJkaWQ6a2V5Ono2TWtoQXFkeUxQVlBOcWRlSnJlUHpmeHZzZ2JndlNHdVNaR1BuWEFoTmpoTmJIVSIsIm5iZiI6MTYzMjIzOTQ3MCwicHJmIjoiZXlKaGJHY2lPaUpGWkVSVFFTSXNJblI1Y0NJNklrcFhWQ0lzSW5WaGRpSTZJakF1Tnk0d0luMD0uZXlKaGRXUWlPaUprYVdRNmEyVjVPbm8yVFd0b1FYRmtlVXhRVmxCT2NXUmxTbkpsVUhwbWVIWnpaMkpuZGxOSGRWTmFSMUJ1V0VGb1RtcG9UbUpJVlNJc0ltRjBkQ0k2VzNzaWQyNW1jeUk2SW1SbGJXOTFjMlZ5TG1acGMzTnBiMjR1Ym1GdFpTOXdkV0pzYVdNdmNHaHZkRzl6THlJc0ltTmhjQ0k2SWs5V1JWSlhVa2xVUlNKOVhTd2laWGh3SWpveE5qTXlNak01TlRZd0xDSnBjM01pT2lKa2FXUTZhMlY1T25vMlRXdG1abmQxVkc4MFRraHhaVmxrVTNSQlEyaHpZMDVqY0VkSWNsQmhORUZyY1c1VVRrZHplbHBGUkVzNFZDSXNJbTVpWmlJNk1UWXpNakl6T1RRM01Dd2ljSEptSWpwdWRXeHNmUT09LlUzX3A2UnVFYk14dzFFbkFsYzU0OERKSjItY2dZZGlPMXN5Z1dfeUpCYzhHUVVMeVM0S1haN05DMU0wUGNISkVfQTlVbmo3Uy0tcXdrbzVDdUFIUEFnPT0ifQ==.PJf68hYl0_JaoMCTkNIavTwrxB98hRFoNh8jWH8rW7rQFmhge3Y4kbXnp0gLPGNBFZzQfgbdUHaS6xZrTfBdAg==';
     decode({ target: { value: encodedUcan } });
   };
+
+  const showNextProof = () => {
+    if (decodedUcan?.payload.prf) {
+      encodedUcan = decodedUcan.payload.prf;
+      decode({ target: { value: encodedUcan } });
+    }
+  }
 
   $: {
     ucan
@@ -65,6 +71,7 @@
 </script>
 
 <svelte:window on:resize={setDevice} />
+
 <InlineNotification lowContrast kind="info" title="Hey there 👋">
   <div style="padding-top: 5px">
     You are using a preview version of UCAN Check. This version only supports
@@ -102,8 +109,15 @@
         </Column>
       </Row>
     {/if}
+    {#if decodedUcan?.payload.prf}
+    <Row>
+      <Column>
+        <Button on:click={showNextProof}>Show Next Proof</Button>
+      </Column>
+    </Row>
+  {/if}
   </Column>
-  <Column>
+  <Column padding>
     <Row>
       <Column>
         <h3>Decoded</h3>
