@@ -11,6 +11,7 @@
     StructuredListRow,
     StructuredListCell,
     StructuredListBody,
+    ToastNotification,
     TextArea
   } from 'carbon-components-svelte';
 
@@ -64,6 +65,16 @@
 </script>
 
 <svelte:window on:resize={setDevice} />
+<InlineNotification lowContrast kind="info" title="Hey there 👋">
+  <div style="padding-top: 5px">
+    You are using a preview version of UCAN Check. This version only supports
+    the latest UCAN version. Try out our new
+    <Link href="https://github.com/fission-suite/ucan" target="_blank">
+      UCAN library
+    </Link>
+    to make some!
+  </div>
+</InlineNotification>
 
 <Row padding>
   <Column>
@@ -152,7 +163,10 @@
         <Row>
           <Column>
             Please see the
-            <Link href="https://datatracker.ietf.org/doc/html/rfc7519" target="_blank">
+            <Link
+              href="https://datatracker.ietf.org/doc/html/rfc7519"
+              target="_blank"
+            >
               JWT RFC
             </Link>
             and the
