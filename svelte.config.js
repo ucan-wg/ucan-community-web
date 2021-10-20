@@ -14,15 +14,7 @@ const config = {
       fallback: null
     }),
     ssr: false,
-    target: '#svelte',
-    vite: {
-      // ssr: {
-      //   external: ['ucans']
-      // },
-      optimizeDeps: {
-        include: ['ucans']
-      }
-    }
+    target: '#svelte'
   }
 };
 

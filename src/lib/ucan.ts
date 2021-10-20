@@ -21,11 +21,11 @@ export const isValid = async (token: Ucan) => {
 
 export const headerFields = (token: Ucan) => {
   if (token !== null) {
-    const ucv = token.header.uav ?
+    const ucv = token.header.ucv ?
       [{
         field: 'ucv',
         longName: 'UCAN Version',
-        value: token.header.uav,
+        value: token.header.ucv,
         details: 'The UCAN version'
       }] : []
 
