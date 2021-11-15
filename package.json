@@ -33,6 +33,6 @@
   },
   "type": "module",
   "dependencies": {
-    "ucans": "file:../ucan"
+    "ucans": "fission-suite/ucan"
   }
 }
