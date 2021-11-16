@@ -4,7 +4,6 @@ import * as ucan from 'ucans';
 export const decode = token => {
   try {
     const decodedUcan = ucan.decode(token);
-    console.log(decodedUcan)
     return { ucan: decodedUcan, error: null };
   } catch {
     return { ucan: null, error: "Could not decode the token." }

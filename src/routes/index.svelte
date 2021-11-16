@@ -18,6 +18,7 @@
 
   import type { Ucan } from 'ucans';
   import * as ucan from '$lib/ucan';
+  import { formatJson } from '$lib/util';
 
   let setDevice = () => {};
 
@@ -127,7 +128,7 @@
       <Column>
         <div style="padding-bottom: 5px">Header</div>
         <CodeSnippet type="multi" hideCopyButton>
-          {JSON.stringify(decodedUcan?.header, null, 2) || ''}
+          {formatJson(decodedUcan?.header)}
         </CodeSnippet>
       </Column>
     </Row>
@@ -135,7 +136,7 @@
       <Column>
         <div style="padding-bottom: 5px">Payload</div>
         <CodeSnippet type="multi" hideCopyButton>
-          {JSON.stringify(decodedUcan?.payload, null, 2) || ''}
+          {formatJson(decodedUcan?.payload)}
         </CodeSnippet>
       </Column>
     </Row>
