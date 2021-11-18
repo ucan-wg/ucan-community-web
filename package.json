@@ -5,6 +5,7 @@
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
     "preview": "svelte-kit preview",
+    "test": "ava src/**/*.test.ts",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
@@ -15,6 +16,7 @@
     "@sveltejs/kit": "next",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
+    "ava": "^3.15.0",
     "carbon-components-svelte": "^0.42.2",
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
@@ -26,13 +28,25 @@
     "svelte-check": "^2.0.0",
     "svelte-preprocess": "^4.0.0",
     "svelte-seo": "^1.2.1",
+    "ts-node": "^10.4.0",
     "tslib": "^2.0.0",
-    "typescript": "^4.0.0",
     "tweetnacl": "^1.0.3",
-    "uint8arrays": "^3.0.0"
+    "typescript": "^4.4.4"
   },
   "type": "module",
   "dependencies": {
-    "ucans": "fission-suite/ucan"
+    "ucans": "fission-suite/ucan",
+    "uint8arrays": "^3.0.0"
+  },
+  "ava": {
+    "extensions": {
+      "ts": "module"
+    },
+    "nonSemVerExperiments": {
+      "configurableModuleFormat": true
+    },
+    "nodeArguments": [
+      "--loader=ts-node/esm"
+    ]
   }
 }

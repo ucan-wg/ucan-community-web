@@ -5,26 +5,29 @@
     Column,
     InlineNotification,
     Link,
+    ListItem,
     Row,
     StructuredList,
     StructuredListHead,
     StructuredListRow,
     StructuredListCell,
     StructuredListBody,
-    TextArea
+    TextArea,
+    UnorderedList
   } from 'carbon-components-svelte';
-
   import { onMount } from 'svelte';
 
   import type { Ucan } from 'ucans';
+  import type { Validation } from '$lib/ucan';
+
   import * as ucan from '$lib/ucan';
-  import { formatJson } from '$lib/util';
+  import { formatDate, formatJson } from '$lib/util';
 
   let setDevice = () => {};
 
   let encodedUcan: string = '';
   let decodedUcan: Ucan | null = null;
-  let isValid: boolean = false;
+  let validation: Validation | null = null;
   let isMobileDevice: boolean;
 
   onMount(async () => {
@@ -41,18 +44,16 @@
 
   const decode = event => {
     encodedUcan = event.target.value.trim();
-    const result = ucan.decode(encodedUcan);
+    decodedUcan = ucan.decode(encodedUcan);
+  };
 
-    if (result.ucan) {
-      decodedUcan = result.ucan;
-    } else {
-      decodedUcan = null;
-    }
+  const validate = async () => {
+    validation = await ucan.validate(decodedUcan);
   };
 
   const showExample = () => {
     encodedUcan =
-    'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVhdiI6IjAuNy4wIn0=.eyJhdWQiOiJkaWQ6a2V5Ono2TWtnWUdGM3RobjhrMUZ2NHA0ZFdYS3RzWENuTEg3cTl5dzRRZ05QVUxEbURLQiIsImF0dCI6W3sid25mcyI6ImRlbW91c2VyLmZpc3Npb24ubmFtZS9wdWJsaWMvcGhvdG9zLyIsImNhcCI6Ik9WRVJXUklURSJ9XSwiZXhwIjoxNjMyMjM5NTYwLCJpc3MiOiJkaWQ6a2V5Ono2TWtoQXFkeUxQVlBOcWRlSnJlUHpmeHZzZ2JndlNHdVNaR1BuWEFoTmpoTmJIVSIsIm5iZiI6MTYzMjIzOTQ3MCwicHJmIjoiZXlKaGJHY2lPaUpGWkVSVFFTSXNJblI1Y0NJNklrcFhWQ0lzSW5WaGRpSTZJakF1Tnk0d0luMD0uZXlKaGRXUWlPaUprYVdRNmEyVjVPbm8yVFd0b1FYRmtlVXhRVmxCT2NXUmxTbkpsVUhwbWVIWnpaMkpuZGxOSGRWTmFSMUJ1V0VGb1RtcG9UbUpJVlNJc0ltRjBkQ0k2VzNzaWQyNW1jeUk2SW1SbGJXOTFjMlZ5TG1acGMzTnBiMjR1Ym1GdFpTOXdkV0pzYVdNdmNHaHZkRzl6THlJc0ltTmhjQ0k2SWs5V1JWSlhVa2xVUlNKOVhTd2laWGh3SWpveE5qTXlNak01TlRZd0xDSnBjM01pT2lKa2FXUTZhMlY1T25vMlRXdG1abmQxVkc4MFRraHhaVmxrVTNSQlEyaHpZMDVqY0VkSWNsQmhORUZyY1c1VVRrZHplbHBGUkVzNFZDSXNJbTVpWmlJNk1UWXpNakl6T1RRM01Dd2ljSEptSWpwdWRXeHNmUT09LlUzX3A2UnVFYk14dzFFbkFsYzU0OERKSjItY2dZZGlPMXN5Z1dfeUpCYzhHUVVMeVM0S1haN05DMU0wUGNISkVfQTlVbmo3Uy0tcXdrbzVDdUFIUEFnPT0ifQ==.PJf68hYl0_JaoMCTkNIavTwrxB98hRFoNh8jWH8rW7rQFmhge3Y4kbXnp0gLPGNBFZzQfgbdUHaS6xZrTfBdAg==';
+      'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVhdiI6IjAuNy4wIn0=.eyJhdWQiOiJkaWQ6a2V5Ono2TWtnWUdGM3RobjhrMUZ2NHA0ZFdYS3RzWENuTEg3cTl5dzRRZ05QVUxEbURLQiIsImF0dCI6W3sid25mcyI6ImRlbW91c2VyLmZpc3Npb24ubmFtZS9wdWJsaWMvcGhvdG9zLyIsImNhcCI6Ik9WRVJXUklURSJ9XSwiZXhwIjoxNjMyMjM5NTYwLCJpc3MiOiJkaWQ6a2V5Ono2TWtoQXFkeUxQVlBOcWRlSnJlUHpmeHZzZ2JndlNHdVNaR1BuWEFoTmpoTmJIVSIsIm5iZiI6MTYzMjIzOTQ3MCwicHJmIjoiZXlKaGJHY2lPaUpGWkVSVFFTSXNJblI1Y0NJNklrcFhWQ0lzSW5WaGRpSTZJakF1Tnk0d0luMD0uZXlKaGRXUWlPaUprYVdRNmEyVjVPbm8yVFd0b1FYRmtlVXhRVmxCT2NXUmxTbkpsVUhwbWVIWnpaMkpuZGxOSGRWTmFSMUJ1V0VGb1RtcG9UbUpJVlNJc0ltRjBkQ0k2VzNzaWQyNW1jeUk2SW1SbGJXOTFjMlZ5TG1acGMzTnBiMjR1Ym1GdFpTOXdkV0pzYVdNdmNHaHZkRzl6THlJc0ltTmhjQ0k2SWs5V1JWSlhVa2xVUlNKOVhTd2laWGh3SWpveE5qTXlNak01TlRZd0xDSnBjM01pT2lKa2FXUTZhMlY1T25vMlRXdG1abmQxVkc4MFRraHhaVmxrVTNSQlEyaHpZMDVqY0VkSWNsQmhORUZyY1c1VVRrZHplbHBGUkVzNFZDSXNJbTVpWmlJNk1UWXpNakl6T1RRM01Dd2ljSEptSWpwdWRXeHNmUT09LlUzX3A2UnVFYk14dzFFbkFsYzU0OERKSjItY2dZZGlPMXN5Z1dfeUpCYzhHUVVMeVM0S1haN05DMU0wUGNISkVfQTlVbmo3Uy0tcXdrbzVDdUFIUEFnPT0ifQ==.PJf68hYl0_JaoMCTkNIavTwrxB98hRFoNh8jWH8rW7rQFmhge3Y4kbXnp0gLPGNBFZzQfgbdUHaS6xZrTfBdAg==';
     decode({ target: { value: encodedUcan } });
   };
 
@@ -61,14 +62,23 @@
       encodedUcan = decodedUcan.payload.prf;
       decode({ target: { value: encodedUcan } });
     }
-  }
+  };
 
   $: {
-    ucan
-      .isValid(decodedUcan)
-      .then(result => (isValid = result))
-      .catch(() => (isValid = false));
+    if (decodedUcan) {
+      ucan
+        .validate(decodedUcan)
+        .then(result => (validation = result))
+        .catch(() => (validation = null));
+    }
   }
+
+  $: isValid =
+    validation !== null &&
+    validation.active === true &&
+    validation.valid === true &&
+    validation.validIssuer === true &&
+    (validation.validProof === true || validation.validProof === null);
 </script>
 
 <svelte:window on:resize={setDevice} />
@@ -111,12 +121,12 @@
       </Row>
     {/if}
     {#if decodedUcan?.payload.prf}
-    <Row>
-      <Column>
-        <Button on:click={showNextProof}>Show Next Proof</Button>
-      </Column>
-    </Row>
-  {/if}
+      <Row>
+        <Column>
+          <Button on:click={showNextProof}>Show Next Proof</Button>
+        </Column>
+      </Row>
+    {/if}
   </Column>
   <Column padding>
     <Row>
@@ -151,25 +161,69 @@
   </Column>
 </Row>
 
-{#if !isValid && encodedUcan !== ''}
+{#if encodedUcan !== ''}
+  {#if decodedUcan === null}
+    <Row>
+      <Column>
+        <InlineNotification
+          kind="warning-alt"
+          title="Decoding error."
+          subtitle="The UCAN could not be decoded. UCANs must be base64 encoded."
+          lowContrast
+        />
+      </Column>
+    </Row>
+  {:else if !isValid && validation}
+    <Row>
+      <Column>
+        <InlineNotification kind="warning-alt" title="Invalid UCAN" lowContrast>
+          <div class="validation-errors">
+            <UnorderedList>
+              {#if validation.valid === false}
+                <ListItem>
+                  UCAN was not signed by the issuer or someone has tampered with
+                  it
+                </ListItem>
+              {/if}
+              {#if validation.active === false}
+                <ListItem>
+                  UCAN expired on {formatDate(decodedUcan.payload.exp)}
+                </ListItem>
+              {/if}
+              {#if validation.validIssuer === false}
+                <ListItem>
+                  The issuer cannot grant the capabilities listed in the
+                  attenuation. The proof audience must match the issuer to
+                  delegate capabilities.
+                </ListItem>
+              {/if}
+              {#if validation.validProof === false}
+                <ListItem>
+                  UCAN proof is invalid. Select Show Next Proof to examine it.
+                </ListItem>
+              {/if}
+            </UnorderedList>
+          </div>
+        </InlineNotification>
+      </Column>
+    </Row>
+  {:else}
   <Row>
     <Column>
       <InlineNotification
-        kind="warning-alt"
-        subtitle="Invalid UCAN. The UCAN may have a bad signature, impermissible attentuations, or it was encoded incorrectly."
+        kind="success"
+        title="Valid UCAN."
+        subtitle="The UCAN is valid and has not expired."
         lowContrast
-        hideCloseButton
       />
     </Column>
   </Row>
+  {/if}
 {/if}
 
 <Row>
   <Column>
-    {#await ucan.isValid(decodedUcan)}
-      <span />
-    {:then valid}
-      {#if valid}
+      {#if decodedUcan !== null}
         <Row padding>
           <Column>
             <h3>Explanation</h3>
@@ -235,6 +289,12 @@
           </Column>
         </Row>
       {/if}
-    {/await}
   </Column>
 </Row>
+
+<style>
+  .validation-errors {
+    width: 100%;
+    padding: 5px 0 0 17px;
+  }
+</style>

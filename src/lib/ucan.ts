@@ -1,21 +1,72 @@
-import type { Ucan } from 'ucans';
-import * as ucan from 'ucans';
+import type { Ucan } from 'ucans'
 
-export const decode = token => {
+import * as ucan from 'ucans'
+import * as uint8arrays from 'uint8arrays'
+
+export type Validation = {
+  active: boolean
+  valid: boolean
+  validIssuer: boolean
+  validProof: boolean | null
+}
+
+export const decode = (token: string) => {
   try {
-    const decodedUcan = ucan.decode(token);
-    return { ucan: decodedUcan, error: null };
+    return ucan.decode(token)
   } catch {
-    return { ucan: null, error: "Could not decode the token." }
+    return null;
   }
 }
 
-export const isValid = async (token: Ucan) => {
-  if (token !== null) {
-    return await ucan.isValid(token)
+export const validate = async (token: Ucan): Promise<Validation> => {
+  const active = !ucan.isExpired(token)
+  const valid = await validateSignature(token)
+  let validProof, validIssuer;
+
+  if (token.payload.prf !== null) {
+    [validIssuer, validProof] = await validateProof(token.payload.prf, token.payload.iss)
   } else {
-    return false
+    // root issuer needs no proof
+    validIssuer = true
+    validProof = null
   }
+
+  return {
+    active,
+    valid,
+    validIssuer,
+    validProof
+  }
+}
+
+const validateSignature = async (token: Ucan): Promise<boolean> => {
+  const encodedHeader = ucan.encodeHeader(token.header)
+  const encodedPayload = ucan.encodePayload(token.payload)
+
+  const data = uint8arrays.fromString(`${encodedHeader}.${encodedPayload}`)
+  const signature = uint8arrays.fromString(token.signature, 'base64urlpad')
+
+  return ucan.verifySignature(data, signature, token.payload.iss)
+}
+
+const validateProof = async (proof: string, delegate: string): Promise<[boolean,boolean]> => {
+  const token = decode(proof)
+
+  const validIssuer = token?.payload.aud === delegate ? true : false
+  let validProof;
+
+  if (token !== null) {
+    try {
+      validProof = await ucan.isValid(token)
+    } catch {
+      validProof = false
+    }
+  }
+
+  return [
+    validIssuer,
+    validProof
+  ]
 }
 
 export const headerFields = (token: Ucan) => {
