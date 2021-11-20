@@ -1,16 +1,16 @@
-import type { TestInterface } from 'ava';
-import type { EdKeypair } from 'ucans';
+import type { TestInterface } from 'ava'
+import type { EdKeypair } from 'ucans'
 
 import anyTest from 'ava'
 import * as ucan from 'ucans'
 import { validate } from './ucan.js'
 
-const test = anyTest as TestInterface<{ root: EdKeypair, child: EdKeypair, ancestor: EdKeypair }>;
+const test = anyTest as TestInterface<{ root: EdKeypair; child: EdKeypair; ancestor: EdKeypair }>
 
 test.before(async t => {
-  t.context.root = await ucan.keypair.EdKeypair.create();
-  t.context.child = await ucan.keypair.EdKeypair.create();
-  t.context.ancestor = await ucan.keypair.EdKeypair.create();
+  t.context.root = await ucan.keypair.EdKeypair.create()
+  t.context.child = await ucan.keypair.EdKeypair.create()
+  t.context.ancestor = await ucan.keypair.EdKeypair.create()
 })
 
 test('validates a ucan', async t => {
@@ -19,8 +19,8 @@ test('validates a ucan', async t => {
     issuer: t.context.root,
     capabilities: [
       {
-        "wnfs": "demouser.fission.name/public/photos/",
-        "cap": "OVERWRITE"
+        'wnfs': 'demouser.fission.name/public/photos/',
+        'cap': 'OVERWRITE'
       }
     ],
     lifetimeInSeconds: 1000
@@ -40,8 +40,8 @@ test('validates a delegated ucan', async t => {
     issuer: t.context.root,
     capabilities: [
       {
-        "wnfs": "demouser.fission.name/public/photos/",
-        "cap": "OVERWRITE"
+        'wnfs': 'demouser.fission.name/public/photos/',
+        'cap': 'OVERWRITE'
       }
     ],
     lifetimeInSeconds: 1000
@@ -52,8 +52,8 @@ test('validates a delegated ucan', async t => {
     issuer: t.context.child,
     capabilities: [
       {
-        "wnfs": "demouser.fission.name/public/photos/",
-        "cap": "OVERWRITE"
+        'wnfs': 'demouser.fission.name/public/photos/',
+        'cap': 'OVERWRITE'
       }
     ],
     lifetimeInSeconds: 1000,
@@ -74,8 +74,8 @@ test('identifies an expired ucan', async t => {
     issuer: t.context.root,
     capabilities: [
       {
-        "wnfs": "demouser.fission.name/public/photos/",
-        "cap": "OVERWRITE"
+        'wnfs': 'demouser.fission.name/public/photos/',
+        'cap': 'OVERWRITE'
       }
     ],
     lifetimeInSeconds: 0
@@ -92,8 +92,8 @@ test('identifies an invalid signature', async t => {
     issuer: t.context.root,
     capabilities: [
       {
-        "wnfs": "demouser.fission.name/public/photos/",
-        "cap": "OVERWRITE"
+        'wnfs': 'demouser.fission.name/public/photos/',
+        'cap': 'OVERWRITE'
       }
     ],
     lifetimeInSeconds: 1000
@@ -113,8 +113,8 @@ test('identifies a mismatched delegate', async t => {
     issuer: t.context.root,
     capabilities: [
       {
-        "wnfs": "demouser.fission.name/public/photos/",
-        "cap": "OVERWRITE"
+        'wnfs': 'demouser.fission.name/public/photos/',
+        'cap': 'OVERWRITE'
       }
     ],
     lifetimeInSeconds: 1000
@@ -125,8 +125,8 @@ test('identifies a mismatched delegate', async t => {
     issuer: t.context.ancestor,
     capabilities: [
       {
-        "wnfs": "demouser.fission.name/public/photos/",
-        "cap": "OVERWRITE"
+        'wnfs': 'demouser.fission.name/public/photos/',
+        'cap': 'OVERWRITE'
       }
     ],
     lifetimeInSeconds: 1000,
@@ -144,8 +144,8 @@ test('identifies an invalid proof', async t => {
     issuer: t.context.root,
     capabilities: [
       {
-        "wnfs": "demouser.fission.name/public/photos/",
-        "cap": "OVERWRITE"
+        'wnfs': 'demouser.fission.name/public/photos/',
+        'cap': 'OVERWRITE'
       }
     ],
     lifetimeInSeconds: 1000
@@ -159,8 +159,8 @@ test('identifies an invalid proof', async t => {
     issuer: t.context.child,
     capabilities: [
       {
-        "wnfs": "demouser.fission.name/public/photos/",
-        "cap": "OVERWRITE"
+        'wnfs': 'demouser.fission.name/public/photos/',
+        'cap': 'OVERWRITE'
       }
     ],
     lifetimeInSeconds: 1000,

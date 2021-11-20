@@ -4,8 +4,8 @@
     Header,
     HeaderActionLink,
     HeaderUtilities
-  } from 'carbon-components-svelte';
-  import LogoGithub20 from 'carbon-icons-svelte/lib/LogoGithub20';
+  } from 'carbon-components-svelte'
+  import LogoGithub20 from 'carbon-icons-svelte/lib/LogoGithub20'
 </script>
 
 <Header company="Fission" platformName="UCAN Check" href="/">

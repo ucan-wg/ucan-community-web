@@ -14,14 +14,16 @@ export const decode = (token: string) => {
   try {
     return ucan.decode(token)
   } catch {
-    return null;
+    return null
   }
 }
 
 export const validate = async (token: Ucan): Promise<Validation> => {
+  let validProof: boolean | null
+  let validIssuer: boolean
+
   const active = !ucan.isExpired(token)
   const valid = await validateSignature(token)
-  let validProof, validIssuer;
 
   if (token.payload.prf !== null) {
     [validIssuer, validProof] = await validateProof(token.payload.prf, token.payload.iss)
@@ -53,7 +55,7 @@ const validateProof = async (proof: string, delegate: string): Promise<[boolean,
   const token = decode(proof)
 
   const validIssuer = token?.payload.aud === delegate ? true : false
-  let validProof;
+  let validProof
 
   if (token !== null) {
     try {
@@ -103,12 +105,12 @@ export const payloadFields = (token: Ucan) => {
   if (token !== null) {
     const attenuations = token.payload.att ?
       token.payload.att.map(att => {
-        let resource: [string, string];
+        let resource: [string, string]
         Object.entries(att).forEach(([key, value]) => {
           if (key !== 'cap') {
-            resource = [key, value];
+            resource = [key, value]
           }
-        });
+        })
 
         return ({
           field: 'att',
@@ -116,7 +118,7 @@ export const payloadFields = (token: Ucan) => {
           value: `${att.cap}, ${resource[0]}: ${resource[1]} `,
           details: 'A capability granted on a resource to the audience'
         })
-      }) : [];
+      }) : []
 
     const notBefore = token.payload.nbf ?
       [{
@@ -138,7 +140,7 @@ export const payloadFields = (token: Ucan) => {
       [{
         field: 'prf',
         longName: 'UCAN Proofs',
-        value: token.payload.prf ? "Select Show Proof to inspect the next UCAN in the chain" : token.payload.prf,
+        value: token.payload.prf ? 'Select Show Proof to inspect the next UCAN in the chain' : token.payload.prf,
         details: 'The proof chain of nested UCANs with equal or greater authority to grant the capabilities'
       }]
 
