@@ -21,8 +21,9 @@
   import type { Ucan } from 'ucans'
   import type { Validation } from '$lib/ucan'
 
+  import * as explantion from '$lib/explanation'
   import * as ucan from '$lib/ucan'
-  import { formatDate, formatJson } from '$lib/util'
+  import { formatDate, formatJson } from '$lib/utils'
 
   let setDevice = () => {}
 
@@ -269,7 +270,7 @@
               </StructuredListRow>
             </StructuredListHead>
             <StructuredListBody>
-              {#each ucan.headerFields(decodedUcan) as row}
+              {#each explantion.headerFields(decodedUcan) as row}
                 <StructuredListRow>
                   <StructuredListCell noWrap>{row.field}</StructuredListCell>
                   <StructuredListCell noWrap>{row.longName}</StructuredListCell>
@@ -279,7 +280,7 @@
                   </StructuredListCell>
                 </StructuredListRow>
               {/each}
-              {#each ucan.payloadFields(decodedUcan) as row}
+              {#each explantion.payloadFields(decodedUcan) as row}
                 <StructuredListRow>
                   <StructuredListCell noWrap>{row.field}</StructuredListCell>
                   <StructuredListCell noWrap>{row.longName}</StructuredListCell>
