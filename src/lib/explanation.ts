@@ -1,4 +1,9 @@
+import * as ucan from 'ucans'
+
 import type { Ucan } from 'ucans'
+
+import { isNotValidYet } from './ucan'
+import { formatDate } from './utils'
 
 export const headerFields = (token: Ucan) => {
   if (token !== null) {
@@ -54,7 +59,8 @@ export const payloadFields = (token: Ucan) => {
         field: 'nbf',
         longName: 'Not Before',
         value: token.payload.nbf,
-        details: 'The UNIX time after which the UCAN is valid'
+        details: 'The UNIX time after which the UCAN is valid. ' +
+          `This UCAN ${isNotValidYet(token) ? 'will be' : 'became'} valid on ${formatDate(token.payload.nbf)}.`
       }] : []
 
     const facts = token.payload.fct ?
@@ -86,7 +92,8 @@ export const payloadFields = (token: Ucan) => {
         field: 'exp',
         longName: 'Expires At',
         value: token.payload.exp,
-        details: 'The UNIX time when the UCAN expires'
+        details: 'The UNIX time when the UCAN expires. ' +
+          `This UCAN ${ucan.isExpired(token) ? 'expired' : 'expires'} on ${formatDate(token.payload.exp)}.`
       },
       {
         field: 'iss',
