@@ -5,7 +5,7 @@ export const formatJson = (maybeJson: Record<string, unknown> | undefined): stri
 }
 
 export function formatDate(timestamp: number): string {
-  const date: Date = new Date(+timestamp)
+  const date: Date = new Date(+timestamp * 1000)
   const lang: string = navigator.language
 
   const formatOptions: Intl.DateTimeFormatOptions = {
