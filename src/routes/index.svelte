@@ -44,7 +44,7 @@
     setDevice()
   })
 
-  const decode =  event => {
+  const decode = event => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     encodedUcan = event.target.value.trim()
     decodedUcan = ucan.decode(encodedUcan)
@@ -80,6 +80,7 @@
 
   $: isValid =
     validation !== null &&
+    validation.notValidYet === false &&
     validation.active === true &&
     validation.valid === true &&
     validation.validIssuer === true &&
@@ -193,6 +194,11 @@
                 <ListItem>
                   UCAN was not signed by the issuer or someone has tampered with
                   it
+                </ListItem>
+              {/if}
+              {#if validation.notValidYet === true}
+                <ListItem>
+                  UCAN is not valid until {formatDate(decodedUcan.payload.nbf)}
                 </ListItem>
               {/if}
               {#if validation.active === false}

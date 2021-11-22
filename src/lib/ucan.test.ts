@@ -68,6 +68,25 @@ test('validates a delegated ucan', async t => {
   t.is(result.validProof, true)
 })
 
+test('identifies a ucan that is not valid yet', async t => {
+  const token = await ucan.build({
+    audience: t.context.child.did(),
+    issuer: t.context.root,
+    capabilities: [
+      {
+        'wnfs': 'demouser.fission.name/public/photos/',
+        'cap': 'OVERWRITE'
+      }
+    ],
+    notBefore: 2637252774,
+    expiration: 2637352774
+  })
+
+  const result = await validate(token)
+
+  t.is(result.notValidYet, true)
+})
+
 test('identifies an expired ucan', async t => {
   const token = await ucan.build({
     audience: t.context.child.did(),

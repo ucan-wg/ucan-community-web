@@ -4,13 +4,14 @@ import * as ucan from 'ucans'
 import * as uint8arrays from 'uint8arrays'
 
 export type Validation = {
+  notValidYet: boolean
   active: boolean
   valid: boolean
   validIssuer: boolean
   validProof: boolean | null
 }
 
-export const decode = (token: string) => {
+export const decode = (token: string): Ucan | null => {
   try {
     return ucan.decode(token)
   } catch {
@@ -22,6 +23,7 @@ export const validate = async (token: Ucan): Promise<Validation> => {
   let validProof: boolean | null
   let validIssuer: boolean
 
+  const notValidYet = isNotValidYet(token)
   const active = !ucan.isExpired(token)
   const valid = await validateSignature(token)
 
@@ -34,6 +36,7 @@ export const validate = async (token: Ucan): Promise<Validation> => {
   }
 
   return {
+    notValidYet,
     active,
     valid,
     validIssuer,
@@ -69,4 +72,8 @@ const validateProof = async (proof: string, delegate: string): Promise<[boolean,
     validIssuer,
     validProof
   ]
+}
+
+export const isNotValidYet = (ucan: Ucan): boolean => {
+  return ucan.payload.nbf > Math.floor(Date.now() / 1000)
 }
