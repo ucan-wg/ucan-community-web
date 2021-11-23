@@ -2,8 +2,8 @@ import * as ucan from 'ucans'
 
 import type { Ucan } from 'ucans'
 
-import { isNotValidYet } from './ucan'
-import { formatDate } from './utils'
+import { isNotValidYet } from '$lib/ucan'
+import { formatDate } from '$lib/utils'
 
 export const headerFields = (token: Ucan) => {
   if (token !== null) {

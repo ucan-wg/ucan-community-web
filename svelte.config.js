@@ -1,3 +1,4 @@
+import { resolve } from 'path';
 import preprocess from 'svelte-preprocess';
 import adapter from '@sveltejs/adapter-static';
 
@@ -14,7 +15,15 @@ const config = {
       fallback: null
     }),
     ssr: false,
-    target: '#svelte'
+    target: '#svelte',
+    vite: {
+      resolve: {
+        alias: {
+          $components: resolve('./src/components'),
+          $static: resolve('./static'),
+        }
+      }
+    }
   }
 };
 
