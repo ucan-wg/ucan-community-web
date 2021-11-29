@@ -34,10 +34,10 @@
 
   onMount(() => {
     setDevice = () => {
-      if (window.innerWidth >= 1025) {
-        isMobileDevice = false
-      } else {
+      if (window.innerWidth <= 768) {
         isMobileDevice = true
+      } else {
+        isMobileDevice = false
       }
     }
 
@@ -107,69 +107,71 @@
 </Row>
 
 <Row>
-  <Column>
-    <Row>
-      <Column>
-        <h3>Encoded</h3>
-      </Column>
-    </Row>
-    <Row padding>
-      <Column>
-        <div style="padding-bottom: 5px">Paste an encoded UCAN</div>
-        <TextArea bind:value={encodedUcan} rows={14} on:input={decode} />
-      </Column>
-    </Row>
-    {#if encodedUcan === ''}
+  <div class="encode-decode-container">
+    <Column>
       <Row>
         <Column>
-          <ButtonSet>
-            <Button on:click={showExample}>Show Example</Button>
-            <Button kind="secondary" on:click={showInvalidExample}>
-              Show Invalid Example
-            </Button>
-          </ButtonSet>
+          <h3>Encoded</h3>
         </Column>
       </Row>
-    {/if}
-    {#if decodedUcan?.payload.prf}
+      <Row padding>
+        <Column>
+          <div style="padding-bottom: 5px">Paste an encoded UCAN</div>
+          <TextArea bind:value={encodedUcan} rows={14} on:input={decode} />
+        </Column>
+      </Row>
+      {#if encodedUcan === ''}
+        <Row>
+          <Column>
+            <ButtonSet>
+              <Button on:click={showExample}>Show Example</Button>
+              <Button kind="secondary" on:click={showInvalidExample}>
+                Show Invalid Example
+              </Button>
+            </ButtonSet>
+          </Column>
+        </Row>
+      {/if}
+      {#if decodedUcan?.payload.prf}
+        <Row>
+          <Column>
+            <Button on:click={showNextProof}>Show Next Proof</Button>
+          </Column>
+        </Row>
+      {/if}
+    </Column>
+    <Column>
       <Row>
         <Column>
-          <Button on:click={showNextProof}>Show Next Proof</Button>
+          <h3>Decoded</h3>
         </Column>
       </Row>
-    {/if}
-  </Column>
-  <Column padding>
-    <Row>
-      <Column>
-        <h3>Decoded</h3>
-      </Column>
-    </Row>
-    <Row padding>
-      <Column>
-        <div style="padding-bottom: 5px">Header</div>
-        <CodeSnippet type="multi" hideCopyButton>
-          {formatJson(decodedUcan?.header)}
-        </CodeSnippet>
-      </Column>
-    </Row>
-    <Row>
-      <Column>
-        <div style="padding-bottom: 5px">Payload</div>
-        <CodeSnippet type="multi" hideCopyButton>
-          {formatJson(decodedUcan?.payload)}
-        </CodeSnippet>
-      </Column>
-    </Row>
-    <Row padding>
-      <Column>
-        <div style="padding-bottom: 5px">Signature</div>
-        <CodeSnippet type="multi" hideCopyButton>
-          {decodedUcan?.signature ?? ''}
-        </CodeSnippet>
-      </Column>
-    </Row>
-  </Column>
+      <Row padding>
+        <Column>
+          <div style="padding-bottom: 5px">Header</div>
+          <CodeSnippet type="multi" hideCopyButton>
+            {formatJson(decodedUcan?.header)}
+          </CodeSnippet>
+        </Column>
+      </Row>
+      <Row>
+        <Column>
+          <div style="padding-bottom: 5px">Payload</div>
+          <CodeSnippet type="multi" hideCopyButton>
+            {formatJson(decodedUcan?.payload)}
+          </CodeSnippet>
+        </Column>
+      </Row>
+      <Row padding>
+        <Column>
+          <div style="padding-bottom: 5px">Signature</div>
+          <CodeSnippet type="multi" hideCopyButton>
+            {decodedUcan?.signature ?? ''}
+          </CodeSnippet>
+        </Column>
+      </Row>
+    </Column>
+  </div>
 </Row>
 
 {#if encodedUcan !== ''}
@@ -271,7 +273,9 @@
               <StructuredListRow head>
                 <StructuredListCell head>Field</StructuredListCell>
                 <StructuredListCell head>Long Name</StructuredListCell>
+                {#if !isMobileDevice}
                 <StructuredListCell head>Value</StructuredListCell>
+                {/if}
                 <StructuredListCell head>Details</StructuredListCell>
               </StructuredListRow>
             </StructuredListHead>
@@ -280,7 +284,9 @@
                 <StructuredListRow>
                   <StructuredListCell noWrap>{row.field}</StructuredListCell>
                   <StructuredListCell noWrap>{row.longName}</StructuredListCell>
+                {#if !isMobileDevice}
                   <StructuredListCell>{row.value}</StructuredListCell>
+                  {/if}
                   <StructuredListCell>
                     {row.details}
                   </StructuredListCell>
@@ -290,7 +296,9 @@
                 <StructuredListRow>
                   <StructuredListCell noWrap>{row.field}</StructuredListCell>
                   <StructuredListCell noWrap>{row.longName}</StructuredListCell>
+                {#if !isMobileDevice}
                   <StructuredListCell>{row.value}</StructuredListCell>
+                  {/if}
                   <StructuredListCell>
                     {row.details}
                   </StructuredListCell>
@@ -305,6 +313,13 @@
 </Row>
 
 <style>
+  .encode-decode-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-gap: 1rem;
+    width: 100%;
+  }
+
   .validation-errors {
     width: 100%;
     padding: 5px 0 0 17px;
