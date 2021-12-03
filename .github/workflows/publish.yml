@@ -1,0 +1,26 @@
+name: 🚀 Publish
+on:
+  push:
+    branches:
+      - main
+jobs:
+  publish_job:
+    name: "🚀 Publish"
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v2
+      - name: 🧱 Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+      - name: 📦 Install packages
+        run: npm install
+      - name: 🏗 Build assets
+        run: npm run build
+      - name: 🚀 Publish to production
+        uses: fission-suite/publish-action@v1
+        with:
+          machine_key: ${{ secrets.FISSION_MACHINE_KEY }}
+          app_url: ucancheck.fission.app
+          build_dir: ./build
