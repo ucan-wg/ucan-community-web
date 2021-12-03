@@ -1,9 +1,14 @@
 <script lang="ts">
-  import { Content, Grid, Theme } from 'carbon-components-svelte'
+  import { 
+    Content, 
+    Grid, 
+    Theme,
+    Row, 
+    Column
+  } from 'carbon-components-svelte'
 
   import Header from '$components/Header.svelte'
   import Footer from '$components/Footer.svelte'
-
   import '$static/white.css'
 
   let theme: 'white' = 'white' as const
@@ -11,20 +16,19 @@
 
 <Theme bind:theme />
 
-<div id="layout">
-  <Header />
-  <Content style="background: none; padding: 0;">
-    <Grid style="height: 100%">
-      <slot />
-    </Grid>
-  </Content>
-  <Footer />
-</div>
+<Header />
+<Content>
+  <Grid>
+    <Row>
+      <Column>
+        <slot />
+      </Column>
+    </Row>
+  </Grid>
+</Content>
+<Footer />
+
 
 <style>
-  #layout {
-    height: 100vh;
-    display: grid;
-    grid-template-rows: 1fr auto;
-  }
+
 </style>
