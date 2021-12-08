@@ -52,19 +52,19 @@
 
   const showExample = () => {
     encodedUcan =
-      'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVjdiI6IjAuNy4wIn0=.eyJhdWQiOiJkaWQ6a2V5Ono2TWt0WVVycTNLZkplUzZVd1VIWUhkTFM2NGQxek5GVFI2dDUxWnBwMWV3WnVOcyIsImF0dCI6W3sid25mcyI6ImRlbW91c2VyLmZpc3Npb24ubmFtZS9wdWJsaWMvcGhvdG9zLyIsImNhcCI6Ik9WRVJXUklURSJ9XSwiZXhwIjoyNjM3MjUyNzc0LCJpc3MiOiJkaWQ6a2V5Ono2TWtzdWhjcXVXeHR5cndMbTZ1WXJNOU1hSE5UQ01qTmRWa3R0YjFvTXF3cnA0SyIsIm5iZiI6MTYzNzI1MjcxNCwicHJmIjoiZXlKaGJHY2lPaUpGWkVSVFFTSXNJblI1Y0NJNklrcFhWQ0lzSW5WamRpSTZJakF1Tnk0d0luMD0uZXlKaGRXUWlPaUprYVdRNmEyVjVPbm8yVFd0emRXaGpjWFZYZUhSNWNuZE1iVFoxV1hKTk9VMWhTRTVVUTAxcVRtUldhM1IwWWpGdlRYRjNjbkEwU3lJc0ltRjBkQ0k2VzNzaWQyNW1jeUk2SW1SbGJXOTFjMlZ5TG1acGMzTnBiMjR1Ym1GdFpTOXdkV0pzYVdNdmNHaHZkRzl6THlJc0ltTmhjQ0k2SWs5V1JWSlhVa2xVUlNKOVhTd2laWGh3SWpveU5qTTNNalV5TnpjMExDSnBjM01pT2lKa2FXUTZhMlY1T25vMlRXdHJXbUoxVUhSQ2IyMVNaMFJOUVUxWVRESnVTREUzUm1wb1dtVlFSMlUxVTBSVVdUSldhbnBCYVVWUVZ5SXNJbTVpWmlJNk1UWXpOekkxTWpjeE5Dd2ljSEptSWpwdWRXeHNmUT09Ll9kZXpRNVdVRjNkTXpKODNHQnktY2RqZExXUnJrUTNLMzBxODhjMFRQVVpLajJCX0lGYXdYbUFaR2lGRjZBX0ZNcE5fbGg0R0xiVmJybDhPZzF4OENnPT0ifQ==.TN0sO-5no3F0pNkPksWh5RdWQrfz3nZaQzwBMjHkKnSpzfC4b5vrYU8nozU9DmzQMNUZ9fUO888DznuIQEagDQ=='
+      'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVjdiI6IjAuNy4wIn0.eyJhdWQiOiJkaWQ6a2V5Ono2TWtzcFNaVlNBM0tWVXZWazZvNVpWTmJ6ZWNqUkNETmZ0TlJMN3M3REtHZkhGbiIsImF0dCI6W3sid25mcyI6ImRlbW91c2VyLmZpc3Npb24ubmFtZS9wdWJsaWMvcGhvdG9zLyIsImNhcCI6Ik9WRVJXUklURSJ9XSwiZXhwIjo5MjU2OTM5NTA1LCJpc3MiOiJkaWQ6a2V5Ono2TWtoSHN1Y012c05ISDNvU3E0YW15a2RodVY2QjVBR1ZaSnpDaG5UOE1KTk03WiIsIm5iZiI6MTYzOTAwMTY0MCwicHJmIjpbImV5SmhiR2NpT2lKRlpFUlRRU0lzSW5SNWNDSTZJa3BYVkNJc0luVmpkaUk2SWpBdU55NHdJbjAuZXlKaGRXUWlPaUprYVdRNmEyVjVPbm8yVFd0b1NITjFZMDEyYzA1SVNETnZVM0UwWVcxNWEyUm9kVlkyUWpWQlIxWmFTbnBEYUc1VU9FMUtUazAzV2lJc0ltRjBkQ0k2VzNzaWQyNW1jeUk2SW1SbGJXOTFjMlZ5TG1acGMzTnBiMjR1Ym1GdFpTOXdkV0pzYVdNdmNHaHZkRzl6THlJc0ltTmhjQ0k2SWs5V1JWSlhVa2xVUlNKOVhTd2laWGh3SWpvNU1qVTJPVE01TlRBMUxDSnBjM01pT2lKa2FXUTZhMlY1T25vMlRXdG5ObEo0YVV4b1duQlJibFJoUkhJNGFUWmlXV053YVU1dVlrNDFabGRZUjNneVNuQlVNMnBxVXpKR1dpSXNJbTVpWmlJNk1UWXpPVEF3TVRZME1Dd2ljSEptSWpwYlhYMC5idFBVQ2w2cVg2WTMtdzE5NE9sZ09vSHN0TmFkNkszS2N1QnhJd0RUOUZfSnU5aDBwOUJyWXNwNHlORFFaYVFycXlWUV9lbjR1ajBnb0JXTExZWk5EUSJdfQ.jzRbm6D7FpKpouT7OrRrl_5-95vgZALyq-Vmy7LCYTx0OmxW8C6Ld2lSq1tIviotaIQ3hxVACdx-Q2yJ3i4GBA'
     decode({ target: { value: encodedUcan } })
   }
 
   const showInvalidExample = () => {
     encodedUcan =
-      'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVjdiI6IjAuNy4wIn0=.eyJhdWQiOiJkaWQ6a2V5Ono2TWtzaExTcUNvbjFNcTVZNll3TTRoSDJpUmNwbnpUWHA5V0Z4cGhvM2Rlc25IYiIsImF0dCI6W3sid25mcyI6ImRlbW91c2VyLmZpc3Npb24ubmFtZS9wdWJsaWMvcGhvdG9zLyIsImNhcCI6Ik9WRVJXUklURSJ9XSwiZXhwIjoxNjM3MTc0NDc4LCJpc3MiOiJkaWQ6a2V5Ono2TWtzaExTcUNvbjFNcTVZNll3TTRoSDJpUmNwbnpUWHA5V0Z4cGhvM2Rlc25IYiIsIm5iZiI6MTYzNzE3NDQxOCwicHJmIjoiZXlKaGJHY2lPaUpGWkVSVFFTSXNJblI1Y0NJNklrcFhWQ0lzSW5WamRpSTZJakF1Tnk0d0luMD0uZXlKaGRXUWlPaUprYVdRNmEyVjVPbm8yVFd0d2FVMDRkMU42UkhwWlkxZHFla3BCVVhKV2J6Vm9aM3BOYm5kQ1RGbDZWMlkwZWtacFRISldhVmx5VnlJc0ltRjBkQ0k2VzNzaWQyNW1jeUk2SW1SbGJXOTFjMlZ5TG1acGMzTnBiMjR1Ym1GdFpTOXdkV0pzYVdNdmNHaHZkRzl6THlJc0ltTmhjQ0k2SWs5V1JWSlhVa2xVUlNKOVhTd2laWGh3SWpveE5qTTNNVGMwTkRjNExDSnBjM01pT2lKa2FXUTZhMlY1T25vMlRXdGxjSGRXYlZGVVdtTmpZV1pvU0hGYVRtSlFaV1ZMWVZWT09GcDRjazVWT0RSTWVHdHBSbTl4UkRsak1TSXNJbTVpWmlJNk1UWXpOekUzTkRReE9Dd2ljSEptSWpwdWRXeHNmUT09LlBKZjY4aFlsMF9KYW9NQ1RrTklhdlR3cnhCOThoUkZvTmg4aldIOHJXN3JRRm1oZ2UzWTRrYlhucDBnTFBHTkJGWnpRZmdiZFVIYVM2eFpyVGZCZEFnPT0ifQ==.PJf68hYl0_JaoMCTkNIavTwrxB98hRFoNh8jWH8rW7rQFmhge3Y4kbXnp0gLPGNBFZzQfgbdUHaS6xZrTfBdAg=='
+      'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVjdiI6IjAuNy4wIn0.eyJhdWQiOiJkaWQ6a2V5Ono2TWttRDMxeG5aaFNnY3hwc2pxWmhSanRLMWJqUExxdVU1ZVNITTV6U3NIdzFtNSIsImF0dCI6W3sid25mcyI6ImRlbW91c2VyLmZpc3Npb24ubmFtZS9wdWJsaWMvcGhvdG9zLyIsImNhcCI6Ik9WRVJXUklURSJ9XSwiZXhwIjoxNjM5MDAxMTcyLCJpc3MiOiJkaWQ6a2V5Ono2TWtuVWppNUNTUVNLR1JEZkRSSjl3MWJoaUpLQ3dyTWFiczdkZUhjcW5CU1dIZyIsIm5iZiI6MTYzOTAwMTExMiwicHJmIjpbImV5SmhiR2NpT2lKRlpFUlRRU0lzSW5SNWNDSTZJa3BYVkNJc0luVmpkaUk2SWpBdU55NHdJbjAuZXlKaGRXUWlPaUprYVdRNmEyVjVPbm8yVFd0dFJETXhlRzVhYUZOblkzaHdjMnB4V21oU2FuUkxNV0pxVUV4eGRWVTFaVk5JVFRWNlUzTklkekZ0TlNJc0ltRjBkQ0k2VzNzaWQyNW1jeUk2SW1SbGJXOTFjMlZ5TG1acGMzTnBiMjR1Ym1GdFpTOXdkV0pzYVdNdmNHaHZkRzl6THlJc0ltTmhjQ0k2SWs5V1JWSlhVa2xVUlNKOVhTd2laWGh3SWpveE5qTTVNREF4TVRjeUxDSnBjM01pT2lKa2FXUTZhMlY1T25vMlRXdHFaR1pSVFhjelkxTmlVRWRpWmxFMU1uSmhSRVkxZEVSM1VYWkxlbGh4YjJKRlJWQkRiVzlxV2pFM2RpSXNJbTVpWmlJNk1UWXpPVEF3TVRFeE1pd2ljSEptSWpwYlhYMC5QSmY2OGhZbDBfSmFvTUNUa05JYXZUd3J4Qjk4aFJGb05oOGpXSDhyVzdyUUZtaGdlM1k0a2JYbnAwZ0xQR05CRlp6UWZnYmRVSGFTNnhaclRmQmRBZz09Il19.PJf68hYl0_JaoMCTkNIavTwrxB98hRFoNh8jWH8rW7rQFmhge3Y4kbXnp0gLPGNBFZzQfgbdUHaS6xZrTfBdAg=='
     decode({ target: { value: encodedUcan } })
   }
 
   const showNextProof = () => {
-    if (decodedUcan?.payload.prf) {
-      encodedUcan = decodedUcan.payload.prf
+    if (decodedUcan?.payload.prf.length > 0) {
+      encodedUcan = decodedUcan.payload.prf[0]
       decode({ target: { value: encodedUcan } })
     }
   }
@@ -84,7 +84,7 @@
     validation.active === true &&
     validation.valid === true &&
     validation.validIssuer === true &&
-    (validation.validProof === true || validation.validProof === null)
+    validation.validProofs === true
 </script>
 
 <svelte:window on:resize={setDevice} />
@@ -132,7 +132,7 @@
           </Column>
         </Row>
       {/if}
-      {#if decodedUcan?.payload.prf}
+      {#if decodedUcan?.payload.prf.length > 0}
         <Row>
           <Column>
             <Button on:click={showNextProof}>Show Next Proof</Button>
@@ -210,15 +210,13 @@
               {/if}
               {#if validation.validIssuer === false}
                 <ListItem>
-                  The issuer cannot grant the capabilities listed in the
-                  attenuation. The proof audience must match the issuer to
-                  delegate capabilities.
+                  The issuer cannot grant all of the capabilities listed in the
+                  attenuation. The audience in each proof must match the issuer
+                  to delegate capabilities.
                 </ListItem>
               {/if}
-              {#if validation.validProof === false}
-                <ListItem>
-                  UCAN proof is invalid. Select Show Next Proof to examine it.
-                </ListItem>
+              {#if validation.validProofs === false}
+                <ListItem>One or more UCAN proofs are invalid</ListItem>
               {/if}
             </UnorderedList>
           </div>
@@ -274,7 +272,7 @@
                 <StructuredListCell head>Field</StructuredListCell>
                 <StructuredListCell head>Long Name</StructuredListCell>
                 {#if !isMobileDevice}
-                <StructuredListCell head>Value</StructuredListCell>
+                  <StructuredListCell head>Value</StructuredListCell>
                 {/if}
                 <StructuredListCell head>Details</StructuredListCell>
               </StructuredListRow>
@@ -284,8 +282,8 @@
                 <StructuredListRow>
                   <StructuredListCell noWrap>{row.field}</StructuredListCell>
                   <StructuredListCell noWrap>{row.longName}</StructuredListCell>
-                {#if !isMobileDevice}
-                  <StructuredListCell>{row.value}</StructuredListCell>
+                  {#if !isMobileDevice}
+                    <StructuredListCell>{row.value}</StructuredListCell>
                   {/if}
                   <StructuredListCell>
                     {row.details}
@@ -296,8 +294,8 @@
                 <StructuredListRow>
                   <StructuredListCell noWrap>{row.field}</StructuredListCell>
                   <StructuredListCell noWrap>{row.longName}</StructuredListCell>
-                {#if !isMobileDevice}
-                  <StructuredListCell>{row.value}</StructuredListCell>
+                  {#if !isMobileDevice}
+                    <StructuredListCell>{row.value}</StructuredListCell>
                   {/if}
                   <StructuredListCell>
                     {row.details}
