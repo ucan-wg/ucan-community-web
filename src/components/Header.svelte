@@ -82,6 +82,8 @@
       <SideNavDivider />
     {/if}
     
+    <!-- TODO: figure out how to create this doc outline based on the headings -->
+    <!-- / etc of the current page  -->
     <SideNavMenu text="On This Page" expanded={true}>
       <SideNavMenuItem text="Intro"/>
       <SideNavMenuItem text="Topic A"/>
