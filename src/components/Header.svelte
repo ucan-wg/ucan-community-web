@@ -8,7 +8,7 @@
   import LogoGithub20 from 'carbon-icons-svelte/lib/LogoGithub20'
 </script>
 
-<Header company="Fission" platformName="UCAN Check" href="/">
+<Header company="UCAN" platformName="Distributed Auth" href="/">
   <div slot="skip-to-content">
     <SkipToContent />
   </div>

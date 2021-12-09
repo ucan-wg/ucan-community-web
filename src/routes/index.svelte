@@ -92,8 +92,8 @@
 <InlineNotification lowContrast kind="info" title="Hey there 👋">
   <div style="padding-top: 5px">
     You are using a preview version of UCAN Check. This version only supports
-    the latest UCAN version. Try out our new
-    <Link href="https://github.com/fission-suite/ucan" target="_blank">
+    the latest UCAN version. Try out the
+    <Link href="https://github.com/ucan-wg/ts-ucan" target="_blank">
       UCAN library
     </Link>
     to make some!
