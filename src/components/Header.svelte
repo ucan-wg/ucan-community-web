@@ -8,16 +8,47 @@
     HeaderNavItem,
     SideNav,
     SideNavItems,
-    SideNavLink
+    SideNavLink,
+    SideNavDivider,
+    SideNavMenu,
+    SideNavMenuItem
   } from 'carbon-components-svelte'
+
+  import { onMount } from 'svelte'
   import LogoGithub20 from 'carbon-icons-svelte/lib/LogoGithub20'
 
   let isSideNavOpen = false
+
+  let setDevice = () => { return false }
+  let isMobileDevice: boolean
+  let deviceType: string
+
+  onMount(() => {
+    setDevice = () => {
+      console.log(`In setDevice: window.innerWidth is ${window.innerWidth}`)
+
+      if (window.innerWidth < 1056) {
+        isMobileDevice = true
+      } else {
+        isMobileDevice = false
+      }
+
+      isMobileDevice ? deviceType = `Mobile: ${window.innerWidth}px wide` : deviceType = `Desktop  ${window.innerWidth}px wide`
+      return isMobileDevice
+    }
+
+    setDevice()
+  })
 </script>
 
+<svelte:window on:resize={setDevice} />
 
-
-<Header company="UCAN" platformName="Distributed Auth" href="/" bind:isSideNavOpen>
+<Header
+  company="UCAN" 
+  platformName="Distributed Auth" 
+  href="/" 
+  bind:isSideNavOpen
+>
   <div slot="skip-to-content">
     <SkipToContent />
   </div>
@@ -42,12 +73,23 @@
 
 <SideNav bind:isOpen={isSideNavOpen}>
   <SideNavItems>
-    <SideNavLink href="/" text="Introduction" />
-    <SideNavLink href="/tool" text="UCAN Tool" />
-    <SideNavLink href="/docs" text="Docs" />
-    <SideNavLink href="/community" text="Community" />
-    <SideNavLink href="/about" text="About" />
+    {#if isMobileDevice}
+      <SideNavLink href="/" text="Introduction" />
+      <SideNavLink href="/tool" text="UCAN Tool" />
+      <SideNavLink href="/docs" text="Docs" />
+      <SideNavLink href="/community" text="Community" />
+      <SideNavLink href="/about" text="About" />
+      <SideNavDivider />
+    {/if}
+    
+    <SideNavMenu text="On This Page" expanded={true}>
+      <SideNavMenuItem text="Intro"/>
+      <SideNavMenuItem text="Topic A"/>
+      <SideNavMenuItem text="Topic B"/>
+      <SideNavMenuItem text="Examples"/>
+    </SideNavMenu>
   </SideNavItems>
 </SideNav>
 
-<style></style>
+<style>
+</style>

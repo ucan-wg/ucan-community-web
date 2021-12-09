@@ -16,7 +16,6 @@
     TextArea,
     UnorderedList
   } from 'carbon-components-svelte'
-  import { onMount } from 'svelte'
 
   import type { Ucan } from 'ucans'
   import type { Validation } from '$lib/ucan'
@@ -25,24 +24,10 @@
   import * as ucan from '$lib/ucan'
   import { formatDate, formatJson } from '$lib/utils'
 
-  let setDevice = () => {}
-
   let encodedUcan: string = ''
   let decodedUcan: Ucan | null = null
   let validation: Validation | null = null
   let isMobileDevice: boolean
-
-  onMount(() => {
-    setDevice = () => {
-      if (window.innerWidth <= 768) {
-        isMobileDevice = true
-      } else {
-        isMobileDevice = false
-      }
-    }
-
-    setDevice()
-  })
 
   const decode = event => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
@@ -86,8 +71,6 @@
     validation.validIssuer === true &&
     (validation.validProof === true || validation.validProof === null)
 </script>
-
-<svelte:window on:resize={setDevice} />
 
 <InlineNotification lowContrast kind="info" title="Hey there 👋">
   <div style="padding-top: 5px">

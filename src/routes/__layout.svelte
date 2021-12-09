@@ -6,12 +6,13 @@
     Row, 
     Column
   } from 'carbon-components-svelte'
-
   import Header from '$components/Header.svelte'
   import Footer from '$components/Footer.svelte'
   import '$static/white.css'
 
+  // let theme: 'white' = 'white' as const
   let theme: 'white' = 'white' as const
+
 </script>
 
 <Theme bind:theme />
@@ -28,7 +29,5 @@
 </Content>
 <Footer />
 
-
 <style>
-
 </style>
