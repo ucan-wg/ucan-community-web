@@ -42,7 +42,6 @@
 </script>
 
 <svelte:window on:resize={setDevice} />
-
 <Header
   company="UCAN" 
   platformName="Distributed Auth" 

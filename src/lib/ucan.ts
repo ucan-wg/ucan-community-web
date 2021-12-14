@@ -8,7 +8,7 @@ export type Validation = {
   active: boolean
   valid: boolean
   validIssuer: boolean
-  validProof: boolean | null
+  validProofs: boolean
 }
 
 export const decode = (token: string): Ucan | null => {
@@ -20,27 +20,17 @@ export const decode = (token: string): Ucan | null => {
 }
 
 export const validate = async (token: Ucan): Promise<Validation> => {
-  let validProof: boolean | null
-  let validIssuer: boolean
-
   const notValidYet = isNotValidYet(token)
   const active = !ucan.isExpired(token)
   const valid = await validateSignature(token)
-
-  if (token.payload.prf !== null) {
-    [validIssuer, validProof] = await validateProof(token.payload.prf, token.payload.iss)
-  } else {
-    // root issuer needs no proof
-    validIssuer = true
-    validProof = null
-  }
+  const [validIssuer, validProofs] = await validateProofs(token.payload.prf, token.payload.iss)
 
   return {
     notValidYet,
     active,
     valid,
     validIssuer,
-    validProof
+    validProofs
   }
 }
 
@@ -54,11 +44,22 @@ const validateSignature = async (token: Ucan): Promise<boolean> => {
   return ucan.verifySignature(data, signature, token.payload.iss)
 }
 
-const validateProof = async (proof: string, delegate: string): Promise<[boolean,boolean]> => {
+const validateProofs = (proofs: string[], delegate: string): Promise<[boolean, boolean]> => {
+  const proofValidations = proofs.map(async proof => await validateProof(proof, delegate))
+
+  return Promise.all(proofValidations).then(promisedValidations =>
+    promisedValidations.reduce(([validIssuer, validProofs], validation) =>
+      [validIssuer && validation.validIssuer, validProofs && validation.validProof],
+      [true, true]
+    )
+  )
+}
+
+const validateProof = async (proof: string, delegate: string): Promise<{ validIssuer: boolean; validProof: boolean }> => {
   const token = decode(proof)
 
-  const validIssuer = token?.payload.aud === delegate ? true : false
-  let validProof
+  const validIssuer: boolean = token?.payload.aud === delegate ? true : false
+  let validProof: boolean
 
   if (token !== null) {
     try {
@@ -68,10 +69,10 @@ const validateProof = async (proof: string, delegate: string): Promise<[boolean,
     }
   }
 
-  return [
+  return {
     validIssuer,
     validProof
-  ]
+  }
 }
 
 export const isNotValidYet = (ucan: Ucan): boolean => {
