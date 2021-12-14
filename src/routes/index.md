@@ -1,37 +1,129 @@
 <script>
 import {
-  ToastNotification
+  
 } from 'carbon-components-svelte'
+
+import Highlight from "svelte-highlight"
+import typescript from "svelte-highlight/src/languages/typescript";
+import github from "svelte-highlight/src/styles/github";
+
+/**
+
+TODO: somehow update the side panel doc outline for 
+
+*/
+
 </script>
 
-<ToastNotification 
-  kind="info"
-  title="Introduction"
-  subtitle="This is the introduction"
-/>
+<svelte:head>
+  {@html github}
+</svelte:head>
+
+<div class="markdown-generated">
 
 # What are UCANs?
 
-User Controlled Authorization Networks (UCANs) are an extension of the popular [JSON Web Token](https://jwt.io/) format specifically designed to enable ways of authorizing offline-first apps and distributed systems by providing a set of credentials and permissions in a self-verifiable format.
+User Controlled Authorization Networks (UCANs) are an extension of the popular [JSON Web Token](https://jwt.io/) format specifically designed to enable ways of authorizing offline-first apps and distributed systems.
 
-## Sure, but what does that mean?
+At a high level, User Controlled Authorization Networks (UCANs) are a way of doing authorization ("what you can do") where users are fully in control. There's no all-powerful authorization server, or server of any kind required. Everything that a users is allowed to do is captured directly in a key or token, and can be sent to anyone that knows how to interpret this format.
 
-One way to think of UCANs is like a piece of ID, for example a driver's license. A driver's license has at least four important aspects:
+Since all Fission accounts are equipped with a global ID and cryptographic keys, we were able to design a system that has very few assumptions and thus works in a huge number of situations.
 
-* it is unique to you
-* it asserts some information about you
-* it enables you to do certain things
-* a format with specific features that allow it to be verified by anyone
+This setup has several advantages:
 
-This is very similar to how UCANs work; let's break this down point by point.
+* Low effort: developers don't need to write and maintain complex access logic
+* Familiar: uses very common JSON Web Tokens (JWTs)
+* Invisible: users don't need to know that anything special is happening
+* Flexible: access can be granted as coarse or granular as the end users wants
+* Scalable: no auth server bottleneck / scales infinitely
+* Secure: military-grade encryption
+* Collaborative: users and services and delegate a subset of their access to others
+* Self-contained: the token contains all the information needed to verify it
 
-1. Uniqueness. Your driver's license has a unique number, your driver's license number. It ( probably ) displays this in a human-readable format, but also in a machine-readable format. Similarly, UCANs use a [cryptographic key pair] as a way to provide a unique identity. When a UCAN is created, it is signed by your unique key, and anyone can use the *public key* in your key pair to verify this.
+UCANs are all that we need to sign into multiple machines, delegate access for service providers to do things while we're offline, securely collaborate on documents with a team, and more. We get the flexibility of fine- or coarse-grained control, all controlled by the one who cares about the data the most: the user.
 
-2. Embedded Information. Driver's licenses are used in our culture for a few different purposes: identity, as a way of verifying that you are allowed by the state to operate a motor vehicle, and some basic demographic information: date of birth, home address, height, weight, a picture of you. All of this is bundled onto a card in a way that allows a nightclub bouncer to verify your age, or a post office clerk to verify your home address when you're picking up a parcel. Similarly, UCANs contain a number of fields the provide context.
+We've implemented this as the authorization system for Fission, and are also making this available as a building block for developers to solve user authorization and delegation within their own applications.
 
-3. The state grants you permission to operate a motor vehicle via a driver's license. There are lots of other incidental use cases for the license as a form of ID, but motor vehicle licensing is the *primary* use case. UCANs are similar in that they embed specific [capabilities|permissions]. These 
+## What is the UCAN data structure?
 
-4. Physical driver's licenses often include a number of specific formatting features that are very difficult to replicate, but are easy to identify. The purpose of this is to allow the aforementioned nightclub doorman to easily detect if your driver's license is fake or legitimate. Similarly, UCANs are self-verifiable: when a UCAN is created, a *proof* is included that can be verified using the issuer's public key. If the proof can be verified, we can be confident that all of the data embedded in the UCAN is genuine and has not been modified in transit.
+Just like [JSON Web Tokens ( JWTs )](https://jwt.io/), UCANs consist of three parts separated by dots (.), which are:
+
+* Header
+* Payload
+* Signature
+
+Just like a JWT typically looks like the following.
+
+<p>
+  <span class=".eg-header"><code>Header</code></span>.<span class="eg-payload"><code>Payload</code></span>.<span class="eg-sig"><code>Signature</code></span>
+</p>
+
+Let's break down these different parts in more detail.
+
+### Header
+
+```
+{
+  "alg": "Ed25519",
+  "typ": "JWT"
+  "uav": "0.1.0"
+}
+```
+
+This is a standard JWT header, plus the extra `uav` field.
+
+* alg — the encryption algorithm used to create the UCAN
+* typ — the type of token this is, this will always be 'JWT'
+* uav — "UCAN version" (so we can track the format of when it was issued)
+
+
+
+### Payload
+
+```
+{
+  "aud": "did:key:zStEZpzSMtTt9k2vszgvCwF4fLQQSyA15W5AQ4z3AR6Bx4eFJ5crJFbuGxKmbma4",
+  "iss": "did:key:z5C4fuP2DDJChhMBCwAkpYUMuJZdNWWH5NeYjUyY8btYfzDh3aHwT5picHr9Ttjq",
+  "nbf": 1588713622,
+  "exp": 1589000000,
+  "scp": "/"
+  "ptc": "APPEND",
+  "prf": null,
+}
+```
+
+ * aud "Audience" — the ID of who it's intended for (the "to" field)
+ * iss "Issuer" — ID of who sent it (the "from" field)
+ * nbf "Not Before" — Unix timestamp of when it becomes valid (typically when it was created, but not always)
+ * exp "Expiry" — Unix timestamp of when it stops being valid
+ * scp "Scope" — The scope of things it's able to change (e.g. a file system path)
+ * ptc "Potency" — what rights come with the token (in this case it's append only)
+ * prf "Proof" — an optional nested token with equal or greater privileges
+
+### Signature
+
+These are then all signed with the user's private key. This key must match the public key in the iss field (user IDs are public keys), directly authenticating the token. As the token is a complete description of access, this token is self-validating with no need to look at other data or services.
+
+## Delegation
+
+What if you want to grant another user or service the ability to perform some action on your behalf? As long as they have a valid UCAN, they can wrap it in another with equal or lesser rights and include the original in the prf field.
+
+Since every UCAN layer is self-signed, we can trace back to the root (no prf field), and know who the delegate is acting as. This chain of tokens is itself is the proof that you're perform some action. The nested proof is encoded as a bearer token. This is because it needs to include its signature to prove that it's valid, and a JWT signature is on the content encoded this way.
+
+This token is thus valid as long as:
+
+ * All token signatures are correct
+ * The time range, potency, and scope of prf are greater-or-equal to the enclosing token
+ * The outer token's iss field matches the prf's aud field (chain "to" and "from" correctly)
+ * The timestamps are valid at the present time
+
+## Hashing
+
+These chains can get large, so you can optionally hash the outermost one before sending it to a server. This acts as a "content address", meaning that if the service hasn't seen it before, it can separately request that token, but if it already has it in cache and doesn't need to get it over the network. Since hashes are much smaller than their content, this can save a lot of bandwidth on repeated requests.
+
+<h4>Next</h4>
+
+</div>
 
 <style>
 </style>
