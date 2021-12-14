@@ -36,6 +36,7 @@
   },
   "type": "module",
   "dependencies": {
+    "svelte-highlight": "^5.1.3",
     "ucans": "fission-suite/ucan",
     "uint8arrays": "^3.0.0"
   },
