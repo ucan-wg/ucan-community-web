@@ -20,16 +20,20 @@
 
   import type { Ucan } from 'ucans'
   import type { Validation } from '$lib/ucan'
+  import type { ProofTree } from '$lib/proof-tree'
 
   import * as explantion from '$lib/explanation'
   import * as ucan from '$lib/ucan'
   import { formatDate, formatJson } from '$lib/utils'
+  import { createProofTree } from '$lib/proof-tree'
+  import Proof from '$components/Proof.svelte'
 
   let setDevice = () => {}
 
   let encodedUcan: string = ''
   let decodedUcan: Ucan | null = null
   let validation: Validation | null = null
+  let proofTree: ProofTree = null
   let isMobileDevice: boolean
 
   onMount(() => {
@@ -44,29 +48,37 @@
     setDevice()
   })
 
-  const decode = event => {
+  const showUcan = event => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     encodedUcan = event.target.value.trim()
     decodedUcan = ucan.decode(encodedUcan)
+
+    createProofTree(encodedUcan)
+      .then(val => {
+        proofTree = val
+      })
+      .catch(err => {
+        console.log('Could not create proof tree: ', err)
+      })
   }
 
   const showExample = () => {
     encodedUcan =
-      'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVjdiI6IjAuNy4wIn0.eyJhdWQiOiJkaWQ6a2V5Ono2TWtzcFNaVlNBM0tWVXZWazZvNVpWTmJ6ZWNqUkNETmZ0TlJMN3M3REtHZkhGbiIsImF0dCI6W3sid25mcyI6ImRlbW91c2VyLmZpc3Npb24ubmFtZS9wdWJsaWMvcGhvdG9zLyIsImNhcCI6Ik9WRVJXUklURSJ9XSwiZXhwIjo5MjU2OTM5NTA1LCJpc3MiOiJkaWQ6a2V5Ono2TWtoSHN1Y012c05ISDNvU3E0YW15a2RodVY2QjVBR1ZaSnpDaG5UOE1KTk03WiIsIm5iZiI6MTYzOTAwMTY0MCwicHJmIjpbImV5SmhiR2NpT2lKRlpFUlRRU0lzSW5SNWNDSTZJa3BYVkNJc0luVmpkaUk2SWpBdU55NHdJbjAuZXlKaGRXUWlPaUprYVdRNmEyVjVPbm8yVFd0b1NITjFZMDEyYzA1SVNETnZVM0UwWVcxNWEyUm9kVlkyUWpWQlIxWmFTbnBEYUc1VU9FMUtUazAzV2lJc0ltRjBkQ0k2VzNzaWQyNW1jeUk2SW1SbGJXOTFjMlZ5TG1acGMzTnBiMjR1Ym1GdFpTOXdkV0pzYVdNdmNHaHZkRzl6THlJc0ltTmhjQ0k2SWs5V1JWSlhVa2xVUlNKOVhTd2laWGh3SWpvNU1qVTJPVE01TlRBMUxDSnBjM01pT2lKa2FXUTZhMlY1T25vMlRXdG5ObEo0YVV4b1duQlJibFJoUkhJNGFUWmlXV053YVU1dVlrNDFabGRZUjNneVNuQlVNMnBxVXpKR1dpSXNJbTVpWmlJNk1UWXpPVEF3TVRZME1Dd2ljSEptSWpwYlhYMC5idFBVQ2w2cVg2WTMtdzE5NE9sZ09vSHN0TmFkNkszS2N1QnhJd0RUOUZfSnU5aDBwOUJyWXNwNHlORFFaYVFycXlWUV9lbjR1ajBnb0JXTExZWk5EUSJdfQ.jzRbm6D7FpKpouT7OrRrl_5-95vgZALyq-Vmy7LCYTx0OmxW8C6Ld2lSq1tIviotaIQ3hxVACdx-Q2yJ3i4GBA'
-    decode({ target: { value: encodedUcan } })
+      'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVjdiI6IjAuNy4wIn0.eyJhdWQiOiJkaWQ6a2V5Ono2TWt2WGZQVXY4Ynh0c1ZRaUdvN050azRxS0pOY2dLMml0NTJwYzczdGVVcFJMVCIsImF0dCI6W3sid25mcyI6ImRlbW91c2VyLmZpc3Npb24ubmFtZS9wdWJsaWMvcGhvdG9zLyIsImNhcCI6Ik9WRVJXUklURSJ9LHsid25mcyI6ImRlbW91c2VyLmZpc3Npb24ubmFtZS9wdWJsaWMvbm90ZXMvIiwiY2FwIjoiT1ZFUldSSVRFIn1dLCJleHAiOjkyNTY5Mzk1MDUsImlzcyI6ImRpZDprZXk6ejZNa3NYUUJmTDhvd3p0VENKVG03aE5SZjZiMThZeFhQcDNpNjZvSkhtOEwzWUdKIiwibmJmIjoxNjM5NjA4MjkzLCJwcmYiOlsiZXlKaGJHY2lPaUpGWkVSVFFTSXNJblI1Y0NJNklrcFhWQ0lzSW5WamRpSTZJakF1Tnk0d0luMC5leUpoZFdRaU9pSmthV1E2YTJWNU9ubzJUV3R6V0ZGQ1prdzRiM2Q2ZEZSRFNsUnROMmhPVW1ZMllqRTRXWGhZVUhBemFUWTJiMHBJYlRoTU0xbEhTaUlzSW1GMGRDSTZXM3NpZDI1bWN5STZJbVJsYlc5MWMyVnlMbVpwYzNOcGIyNHVibUZ0WlM5d2RXSnNhV012Y0dodmRHOXpMeUlzSW1OaGNDSTZJazlXUlZKWFVrbFVSU0o5WFN3aVpYaHdJam81TWpVMk9UTTVOVEExTENKcGMzTWlPaUprYVdRNmEyVjVPbm8yVFd0d05VVnplamx6TWsxSWMzRlpka3h2WTJONVNIZFlOVk5sZVZwTGNIRTNPVWQwTkRWbVJrZEZXbEk1T1NJc0ltNWlaaUk2TVRZek9UWXdPREk1TXl3aWNISm1JanBiWFgwLjRUTmh1SFJyUEc5YUhvODY5SFhsc05LOF9GbWxTaFE1R3pHNGl0TjJOS2steUtUYkFNb0Z3VHVwdEcwWEZnTkl2SHVsUHBsVnpaWURWRGV4bzc2a0F3IiwiZXlKaGJHY2lPaUpGWkVSVFFTSXNJblI1Y0NJNklrcFhWQ0lzSW5WamRpSTZJakF1Tnk0d0luMC5leUpoZFdRaU9pSmthV1E2YTJWNU9ubzJUV3R6V0ZGQ1prdzRiM2Q2ZEZSRFNsUnROMmhPVW1ZMllqRTRXWGhZVUhBemFUWTJiMHBJYlRoTU0xbEhTaUlzSW1GMGRDSTZXM3NpZDI1bWN5STZJbVJsYlc5MWMyVnlMbVpwYzNOcGIyNHVibUZ0WlM5d2RXSnNhV012Ym05MFpYTXZJaXdpWTJGd0lqb2lUMVpGVWxkU1NWUkZJbjFkTENKbGVIQWlPamt5TlRZNU16azFNRFVzSW1semN5STZJbVJwWkRwclpYazZlalpOYTNBMVJYTjZPWE15VFVoemNWbDJURzlqWTNsSWQxZzFVMlY1V2t0d2NUYzVSM1EwTldaR1IwVmFVams1SWl3aWJtSm1Jam94TmpNNU5qQTRNamt6TENKd2NtWWlPbHRkZlEuTWdZYXJMcXk3Um1RMUFJcnFZTDZjRnk5ejdhNVdJQVUtLVRZQVJQU2dpck9Tc3p2YXIzX0ROcjI1cmJQcmV0SGJuVDBtTVZLeW9hUVhydVI3S2JyQmciXX0.kwRdqPN74pkcpXGgdk7Z7FW3M1mRRYaDE5ZgkG6srAuu6V6mvMVRdBLnD5CWid-X4tDIKpliVjlCSLTntB4pCw'
+    showUcan({ target: { value: encodedUcan } })
   }
 
   const showInvalidExample = () => {
     encodedUcan =
-      'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVjdiI6IjAuNy4wIn0.eyJhdWQiOiJkaWQ6a2V5Ono2TWttRDMxeG5aaFNnY3hwc2pxWmhSanRLMWJqUExxdVU1ZVNITTV6U3NIdzFtNSIsImF0dCI6W3sid25mcyI6ImRlbW91c2VyLmZpc3Npb24ubmFtZS9wdWJsaWMvcGhvdG9zLyIsImNhcCI6Ik9WRVJXUklURSJ9XSwiZXhwIjoxNjM5MDAxMTcyLCJpc3MiOiJkaWQ6a2V5Ono2TWtuVWppNUNTUVNLR1JEZkRSSjl3MWJoaUpLQ3dyTWFiczdkZUhjcW5CU1dIZyIsIm5iZiI6MTYzOTAwMTExMiwicHJmIjpbImV5SmhiR2NpT2lKRlpFUlRRU0lzSW5SNWNDSTZJa3BYVkNJc0luVmpkaUk2SWpBdU55NHdJbjAuZXlKaGRXUWlPaUprYVdRNmEyVjVPbm8yVFd0dFJETXhlRzVhYUZOblkzaHdjMnB4V21oU2FuUkxNV0pxVUV4eGRWVTFaVk5JVFRWNlUzTklkekZ0TlNJc0ltRjBkQ0k2VzNzaWQyNW1jeUk2SW1SbGJXOTFjMlZ5TG1acGMzTnBiMjR1Ym1GdFpTOXdkV0pzYVdNdmNHaHZkRzl6THlJc0ltTmhjQ0k2SWs5V1JWSlhVa2xVUlNKOVhTd2laWGh3SWpveE5qTTVNREF4TVRjeUxDSnBjM01pT2lKa2FXUTZhMlY1T25vMlRXdHFaR1pSVFhjelkxTmlVRWRpWmxFMU1uSmhSRVkxZEVSM1VYWkxlbGh4YjJKRlJWQkRiVzlxV2pFM2RpSXNJbTVpWmlJNk1UWXpPVEF3TVRFeE1pd2ljSEptSWpwYlhYMC5QSmY2OGhZbDBfSmFvTUNUa05JYXZUd3J4Qjk4aFJGb05oOGpXSDhyVzdyUUZtaGdlM1k0a2JYbnAwZ0xQR05CRlp6UWZnYmRVSGFTNnhaclRmQmRBZz09Il19.PJf68hYl0_JaoMCTkNIavTwrxB98hRFoNh8jWH8rW7rQFmhge3Y4kbXnp0gLPGNBFZzQfgbdUHaS6xZrTfBdAg=='
-    decode({ target: { value: encodedUcan } })
+      'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVjdiI6IjAuNy4wIn0.eyJhdWQiOiJkaWQ6a2V5Ono2TWt1UzNKdlFpdEhxbTJTZzJCRHMyb3hGeVc0em1tQzRnOGtKRXBBTWVyVnp0RyIsImF0dCI6W3sid25mcyI6ImRlbW91c2VyLmZpc3Npb24ubmFtZS9wdWJsaWMvcGhvdG9zLyIsImNhcCI6Ik9WRVJXUklURSJ9LHsid25mcyI6ImRlbW91c2VyLmZpc3Npb24ubmFtZS9wdWJsaWMvbm90ZXMvIiwiY2FwIjoiT1ZFUldSSVRFIn1dLCJleHAiOjkyNTY5Mzk1MDUsImlzcyI6ImRpZDprZXk6ejZNa2tpQ0piRVVSYU1LSHJ0a0VnYmlVQWN4cDNzZ3RRMU1lV3BrZ2NtUWFWZVc2IiwibmJmIjoxNjM5NjA4ODc4LCJwcmYiOlsiZXlKaGJHY2lPaUpGWkVSVFFTSXNJblI1Y0NJNklrcFhWQ0lzSW5WamRpSTZJakF1Tnk0d0luMC5leUpoZFdRaU9pSmthV1E2YTJWNU9ubzJUV3RyYVVOS1lrVlZVbUZOUzBoeWRHdEZaMkpwVlVGamVIQXpjMmQwVVRGTlpWZHdhMmRqYlZGaFZtVlhOaUlzSW1GMGRDSTZXM3NpZDI1bWN5STZJbVJsYlc5MWMyVnlMbVpwYzNOcGIyNHVibUZ0WlM5d2RXSnNhV012Y0dodmRHOXpMeUlzSW1OaGNDSTZJazlXUlZKWFVrbFVSU0o5WFN3aVpYaHdJam81TWpVMk9UTTVOVEExTENKcGMzTWlPaUprYVdRNmEyVjVPbm8yVFd0b1ltRTNObHB6YTFkclJVZEdhalptVkUxaWRGUk9XSFp6UVRRek5YZFVlVzVsTVZsMmFFTTRhMFJ5TnlJc0ltNWlaaUk2TVRZek9UWXdPRGczT0N3aWNISm1JanBiWFgwLlBKZjY4aFlsMF9KYW9NQ1RrTklhdlR3cnhCOThoUkZvTmg4aldIOHJXN3JRRm1oZ2UzWTRrYlhucDBnTFBHTkJGWnpRZmdiZFVIYVM2eFpyVGZCZEFnPT0iLCJleUpoYkdjaU9pSkZaRVJUUVNJc0luUjVjQ0k2SWtwWFZDSXNJblZqZGlJNklqQXVOeTR3SW4wLmV5SmhkV1FpT2lKa2FXUTZhMlY1T25vMlRXdDJjVTUyUXpaVGRXTXlhbkZ5Y3pGRWEzaElVVlV4U205VlhabFVuRTRZMk5uUldRMFJtcHFWblphSWl3aWJtSm1Jam94TmpNNU5qQTROemt6TENKd2NtWWlPbHRkZlEueVZZdzhjdFNER2IybHhlU0w5MDdPbW5NWVVOV3lDYjlUZUZnR2xnTmIwOXR2aFRBZE00NnpKSUxtcC0tY2t0c3lIWmZUbkItVVVRRTJRTlpYNVp1QUEiLCJleUpoYkdjaU9pSkZaRVJUUVNJc0luUjVjQ0k2SWtwWFZDSXNJblZqZGlJNklqQXVOeTR3SW4wLmV5SmhkV1FpT2lKa2FXUTZhMlY1T25vMlRXdHJhVU5LWWtWVlVtRk5TMGh5ZEd0RloySnBWVUZqZUhBemMyZDBVVEZOWlZkd2EyZGpiVkZoVm1WWE5pSXNJbUYwZENJNlczc2lkMjVtY3lJNkltUmxiVzkxYzJWeUxtWnBjM05wYjI0dWJtRnRaUzl3ZFdKc2FXTXZibTkwWlhNdklpd2lZMkZ3SWpvaVQxWkZVbGRTU1ZSRkluMWRMQ0psZUhBaU9qa3lOVFk1TXprMU1EVXNJbWx6Y3lJNkltUnBaRHByWlhrNmVqWk5hMmhpWVRjMlduTnJWMnRGUjBacU5tWlVUV0owVkU1WWRuTkJORE0xZDFSNWJtVXhXWFpvUXpoclJISTNJaXdpYm1KbUlqb3hOak01TmpBNE9EYzRMQ0p3Y21ZaU9sdGRmUS50NnhWLXZ3ZjBNbm0yTmt3aXl4X2stRFVQVWJ1LThOU1dyUmc1U01rQmY3TWQ5dGZhZ2JTZkFzTS1iRDJCcUdxYUZ6TXRULUFtbzZwcE85cHhaZ0JDUSJdfQ.GzBKFMHthcqWNJZgiFCjS3zYsOT_ygwdacfxZl_LB0yGqfq_90Eb6Y7t33UFcxXi8k5mMjKV3_cjiGilMYwEAw'
+    showUcan({ target: { value: encodedUcan } })
   }
 
-  const showNextProof = () => {
-    if (decodedUcan?.payload.prf.length > 0) {
-      encodedUcan = decodedUcan.payload.prf[0]
-      decode({ target: { value: encodedUcan } })
-    }
+  const showProof = (event: CustomEvent) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+    proofTree = event.detail.node
+    encodedUcan = proofTree.token
+    decodedUcan = ucan.decode(encodedUcan)
   }
 
   $: {
@@ -117,7 +129,7 @@
       <Row padding>
         <Column>
           <div style="padding-bottom: 5px">Paste an encoded UCAN</div>
-          <TextArea bind:value={encodedUcan} rows={14} on:input={decode} />
+          <TextArea bind:value={encodedUcan} rows={14} on:input={showUcan} />
         </Column>
       </Row>
       {#if encodedUcan === ''}
@@ -129,13 +141,6 @@
                 Show Invalid Example
               </Button>
             </ButtonSet>
-          </Column>
-        </Row>
-      {/if}
-      {#if decodedUcan?.payload.prf.length > 0}
-        <Row>
-          <Column>
-            <Button on:click={showNextProof}>Show Next Proof</Button>
           </Column>
         </Row>
       {/if}
@@ -173,6 +178,14 @@
     </Column>
   </div>
 </Row>
+
+{#if proofTree !== null && encodedUcan !== ''}
+  <Row>
+    <Column>
+      <Proof bind:proofTree on:selectproof={showProof} />
+    </Column>
+  </Row>
+{/if}
 
 {#if encodedUcan !== ''}
   {#if decodedUcan === null}
