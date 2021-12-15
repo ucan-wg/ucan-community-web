@@ -20,6 +20,7 @@
   let isSideNavOpen = false
 
   let setDevice = () => { return false }
+  let buildDocOutline = (selector : string) => { return ( selector.length && selector.length > 0 ) }
   let isMobileDevice: boolean
   let deviceType: string
 
@@ -33,22 +34,38 @@
   
   onMount(() => {
     setDevice = () => {
-      console.log(`In setDevice: window.innerWidth is ${window.innerWidth}`)
-
       if (window.innerWidth < 1056) {
         isMobileDevice = true
       } else {
         isMobileDevice = false
       }
-
-      isMobileDevice ? deviceType = `Mobile: ${window.innerWidth}px wide` : deviceType = `Desktop  ${window.innerWidth}px wide`
       return isMobileDevice
     }
-    
-    setDevice()
-  })
 
-  // static array of top level nav links
+    // the start of a function that parses out header tags in the doc and builds a doc buildDocOutline.
+    buildDocOutline = (selector) => {
+      // let docRoot = document.querySelector(selector)
+
+      // let selector = 'div.markdown-generated'
+      // let docRoot = document.querySelector(sel)
+
+      // let arr = [].slice.call(docRoot.childNodes)
+
+      // let _map = arr.map((el) => {
+      //   if (el.tagName && el.tagName[0].toLowerCase() === 'h') {
+      //     return [el.tagName, el.textContent ]; 
+      //   }
+      //   else {
+      //     return false
+      //   }
+      // })
+
+      return ( selector.length && selector.length > 0 )
+    }
+
+    setDevice()
+    buildDocOutline('div.markdown-generated')
+  })
 
 </script>
 
