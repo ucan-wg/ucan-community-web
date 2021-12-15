@@ -23,6 +23,14 @@
   let isMobileDevice: boolean
   let deviceType: string
 
+  let siteNavMap = [
+    { href: '/', label: 'Introduction' },
+    { href: '/validator', label: 'UCAN Validator' },
+    { href: '/learn', label: 'Learn' },
+    { href: '/community', label: 'Community' },
+    { href: '/about', label: 'About' }
+  ]
+  
   onMount(() => {
     setDevice = () => {
       console.log(`In setDevice: window.innerWidth is ${window.innerWidth}`)
@@ -36,9 +44,12 @@
       isMobileDevice ? deviceType = `Mobile: ${window.innerWidth}px wide` : deviceType = `Desktop  ${window.innerWidth}px wide`
       return isMobileDevice
     }
-
+    
     setDevice()
   })
+
+  // static array of top level nav links
+
 </script>
 
 <svelte:window on:resize={setDevice} />
@@ -53,11 +64,9 @@
   </div>
 
   <HeaderNav>
-    <HeaderNavItem href="/" text="Introduction" />
-    <HeaderNavItem href="/tool" text="UCAN Tool" />
-    <HeaderNavItem href="/docs" text="Docs" />
-    <HeaderNavItem href="/community" text="Community" />
-    <HeaderNavItem href="/about" text="About" />
+    {#each siteNavMap as link}
+      <HeaderNavItem href="{link.href}" text="{link.label}" />
+    {/each}
   </HeaderNav>
 
   <HeaderUtilities>
@@ -73,11 +82,9 @@
 <SideNav bind:isOpen={isSideNavOpen}>
   <SideNavItems>
     {#if isMobileDevice}
-      <SideNavLink href="/" text="Introduction" />
-      <SideNavLink href="/tool" text="UCAN Tool" />
-      <SideNavLink href="/docs" text="Docs" />
-      <SideNavLink href="/community" text="Community" />
-      <SideNavLink href="/about" text="About" />
+      {#each siteNavMap as link}
+        <SideNavLink href="{link.href}" text="{link.label}" />
+      {/each}
       <SideNavDivider />
     {/if}
     
