@@ -2,6 +2,9 @@ import { resolve } from 'path'
 import preprocess from 'svelte-preprocess'
 import adapter from '@sveltejs/adapter-static'
 import { mdsvex } from "mdsvex"
+import remarkHeadingId from 'remark-heading-id'
+
+console.log('from build script', remarkHeadingId)
 
 // import { plugin: mdPlugin, Mode } from 'vite-plugin-markdown'
 
@@ -11,7 +14,11 @@ const config = {
   // Consult https://github.com/sveltejs/svelte-preprocess
   // for more information about preprocessors
   preprocess: [
-    mdsvex({ extensions: ['.md'] }),
+    mdsvex({ 
+      extensions: ['.md'],
+      remarkPlugins: [remarkHeadingId],
+      rehypePlugins: []
+    }),
     preprocess()
   ],
   kit: {

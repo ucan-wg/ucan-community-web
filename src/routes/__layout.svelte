@@ -30,14 +30,6 @@
 
 <style>
 
-:global(div.markdown-generated > p), 
-:global(div.markdown-generated > ul),
-:global(div.markdown-generated > pre) {
-  /* border: 1px dashed blue; */
-  margin-bottom: 1.2em;
-  width: 95%;
-}
-
 :global(div.markdown-generated > pre) {
   background-color: #dedede;
   padding: 5px;
@@ -48,14 +40,24 @@
   padding: 10px;
 }
 
-:global(div.markdown-generated), 
-:global(div.markdown-generated p), 
-:global(div.markdown-generated ul li),
-:global(div.markdown-generated a) {
+:global(div.markdown-generated),
+:global(div.markdown-generated > pre),
+:global(div.markdown-generated p) {
   font-family:Arial, Helvetica, sans-serif;
-  font-size: large;
   line-height: 1.4em;
+  font-size: large;
+  width: 95%;
 }
+
+:global(div.markdown-generated),
+:global(div.markdown-generated > pre),
+:global(div.markdown-generated p), 
+:global(div.markdown-generated ul) {
+  font-size: large;
+  margin-bottom: 1.2em;
+  margin-top: 1.4em;
+}
+
 
 :global(div.markdown-generated h1), :global(div.markdown-generated h2), :global(div.markdown-generated h3) {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -65,10 +67,11 @@
 :global(div.markdown-generated ul li) {
   list-style: disc;
   margin-left: 1.4em;
+  width: 95%;
 }
 
 :global(div.markdown-generated a) {
-  color: blue;
+  color: #343434;
 }
 
 :global(div.markdown-generated a:visited) {
@@ -77,18 +80,6 @@
 
 :global(div.markdown-generated a:hover) {
   color: red;
-}
-
-:global(.\.eg-header) {
-  color: red;
-}
-
-:global(.eg-payload) {
-  color: green;
-}
-
-:global(.eg-sig) {
-  color: blue;
 }
 
 </style>

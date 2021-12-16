@@ -16,13 +16,12 @@
 
   import { onMount } from 'svelte'
   import LogoGithub20 from 'carbon-icons-svelte/lib/LogoGithub20'
-
   let isSideNavOpen = false
 
   let setDevice = () => { return false }
-  let buildDocOutline = (selector : string) => { return ( selector.length && selector.length > 0 ) }
+  let buildDocOutline = (selector : string) => { return  ( selector.length === 0 ) || false }
   let isMobileDevice: boolean
-  let deviceType: string
+  // let deviceType: string
 
   let siteNavMap = [
     { href: '/', label: 'Introduction' },
@@ -44,23 +43,55 @@
 
     // the start of a function that parses out header tags in the doc and builds a doc buildDocOutline.
     buildDocOutline = (selector) => {
-      // let docRoot = document.querySelector(selector)
+      let headers = []
 
-      // let selector = 'div.markdown-generated'
-      // let docRoot = document.querySelector(sel)
+      function createMenuEntry(element : HTMLElement) {
+        let span = document.createElement('span')
+        span.textContent = element.textContent
+        span.className = 'bx--side-nav__link-text'
 
-      // let arr = [].slice.call(docRoot.childNodes)
+        let link = document.createElement('a')
+        link.className = 'bx--side-nav__link'
+        link.href = `#${element.id}`
+        link.appendChild(span)
 
-      // let _map = arr.map((el) => {
-      //   if (el.tagName && el.tagName[0].toLowerCase() === 'h') {
-      //     return [el.tagName, el.textContent ]; 
-      //   }
-      //   else {
-      //     return false
-      //   }
-      // })
+        let item = document.createElement('li')
+        item.className = 'bx--side-nav__menu-item'
+        item.appendChild(link)
 
-      return ( selector.length && selector.length > 0 )
+        return item
+      }
+
+      function formatId(content : string) {
+        return content.replace(/[\s]/g, '-').toLowerCase().trim()
+      }
+
+      document.querySelectorAll(`${selector} > *`).forEach((el) => {
+        if (el.tagName.toLowerCase().startsWith('h')) {
+          el.id = formatId(el.textContent)
+          headers.push(el)
+        }
+      })
+
+      let subMenu = document.querySelector('.bx--side-nav__submenu')
+
+      if (subMenu) {
+        console.log('Menu!', subMenu)
+        let next = subMenu.nextElementSibling
+        console.log('next!', next)
+
+        headers.forEach(item => {
+          console.log('item!', item)
+          let _el = createMenuEntry(item)
+          console.log(_el)
+          next.appendChild(_el)
+        })
+
+        // console.log(headers)
+
+      }
+      
+      return true
     }
 
     setDevice()
@@ -108,10 +139,7 @@
     <!-- TODO: figure out how to create this doc outline based on the headings -->
     <!-- / etc of the current page  -->
     <SideNavMenu text="On This Page" expanded={true}>
-      <SideNavMenuItem text="Intro"/>
-      <SideNavMenuItem text="Topic A"/>
-      <SideNavMenuItem text="Topic B"/>
-      <SideNavMenuItem text="Examples"/>
+      <!-- <SideNavMenuItem text="Intro" href="#intro"/> -->
     </SideNavMenu>
   </SideNavItems>
 </SideNav>

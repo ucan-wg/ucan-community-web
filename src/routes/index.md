@@ -1,6 +1,5 @@
 <script>
 import {
-  
 } from 'carbon-components-svelte'
 
 import Highlight from "svelte-highlight"
@@ -21,7 +20,7 @@ TODO: somehow update the side panel doc outline for
 
 <div class="markdown-generated">
 
-# What are UCANs?
+# Introduction to UCANs
 
 User Controlled Authorization Networks (UCANs) are an extension of the popular [JSON Web Token](https://jwt.io/) format specifically designed to enable ways of authorizing offline-first apps and distributed systems.
 
@@ -44,7 +43,9 @@ UCANs are all that we need to sign into multiple machines, delegate access for s
 
 We've implemented this as the authorization system for Fission, and are also making this available as a building block for developers to solve user authorization and delegation within their own applications.
 
-## What is the UCAN data structure?
+<a id="data-structure" />
+
+<h2>The UCAN data structure</h2>
 
 Just like [JSON Web Tokens ( JWTs )](https://jwt.io/), UCANs consist of three parts separated by dots (.), which are:
 
@@ -126,4 +127,15 @@ These chains can get large, so you can optionally hash the outermost one before 
 </div>
 
 <style>
+:global(.\.eg-header) {
+  color: red;
+}
+
+:global(.eg-payload) {
+  color: green;
+}
+
+:global(.eg-sig) {
+  color: blue;
+}
 </style>
