@@ -39,7 +39,7 @@ const validateSignature = async (token: Ucan): Promise<boolean> => {
   const encodedPayload = ucan.encodePayload(token.payload)
 
   const data = uint8arrays.fromString(`${encodedHeader}.${encodedPayload}`)
-  const signature = uint8arrays.fromString(token.signature, 'base64urlpad')
+  const signature = uint8arrays.fromString(token.signature, 'base64url')
 
   return ucan.verifySignature(data, signature, token.payload.iss)
 }
