@@ -14,8 +14,9 @@
     StructuredListCell,
     StructuredListBody,
     TextArea,
-    UnorderedList
+    UnorderedList,
   } from 'carbon-components-svelte'
+  import { truncate } from 'carbon-components-svelte/actions'
   import { onMount } from 'svelte'
 
   import type { Ucan } from 'ucans'
@@ -48,18 +49,16 @@
     setDevice()
   })
 
-  const showUcan = event => {
+  const showUcan = async event => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     encodedUcan = event.target.value.trim()
-    decodedUcan = ucan.decode(encodedUcan)
+    decodedUcan = await ucan.decode(encodedUcan)
 
-    createProofTree(encodedUcan)
-      .then(val => {
-        proofTree = val
-      })
-      .catch(err => {
-        console.log('Could not create proof tree: ', err)
-      })
+    try {
+      proofTree = await createProofTree(encodedUcan)
+    } catch (err) {
+      console.log('Could not create proof tree: ', err)
+    }
   }
 
   const showExample = () => {
@@ -74,24 +73,24 @@
     showUcan({ target: { value: encodedUcan } })
   }
 
-  const showProof = (event: CustomEvent) => {
+  const showProof = async (event: CustomEvent) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
     proofTree = event.detail.node
     encodedUcan = proofTree.token
-    decodedUcan = ucan.decode(encodedUcan)
+    decodedUcan = await ucan.decode(encodedUcan)
   }
 
   $: {
     if (decodedUcan) {
       ucan
-        .validate(decodedUcan)
-        .then(result => (validation = result))
+        .validate(encodedUcan)
+        .then(result => (validation = result.validation))
         .catch(() => (validation = null))
     }
   }
 
   $: isValid =
-    validation !== null &&
+    validation != null &&
     validation.notValidYet === false &&
     validation.active === true &&
     validation.valid === true &&
@@ -308,7 +307,17 @@
                   <StructuredListCell noWrap>{row.field}</StructuredListCell>
                   <StructuredListCell noWrap>{row.longName}</StructuredListCell>
                   {#if !isMobileDevice}
-                    <StructuredListCell>{row.value}</StructuredListCell>
+                    <StructuredListCell>
+                      {#if row.value.length === 1}
+                        {row.value[0]}
+                      {:else}
+                        <Column noGutter>
+                          {#each row.value as val}
+                            <div use:truncate>{val}</div>
+                          {/each}
+                        </Column>
+                      {/if}
+                    </StructuredListCell>
                   {/if}
                   <StructuredListCell>
                     {row.details}

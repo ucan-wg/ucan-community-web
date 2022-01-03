@@ -2,7 +2,6 @@ import * as ucan from 'ucans'
 
 import type { Ucan } from 'ucans'
 
-import { isNotValidYet } from '$lib/ucan'
 import { formatDate } from '$lib/utils'
 
 export const headerFields = (token: Ucan) => {
@@ -35,55 +34,67 @@ export const headerFields = (token: Ucan) => {
   }
 }
 
-export const payloadFields = (token: Ucan) => {
+interface PayloadFieldInfo {
+  field: string
+  longName: string
+  value: string[]
+  details: string
+}
+
+export const payloadFields = (token: Ucan): PayloadFieldInfo[] => {
   if (token !== null) {
-    const attenuations = token.payload.att ?
-      token.payload.att.map(att => {
-        let resource: [string, string]
-        Object.entries(att).forEach(([key, value]) => {
-          if (key !== 'cap') {
-            resource = [key, value]
-          }
-        })
+    const attenuations: PayloadFieldInfo[] = token.payload.att.length > 0 ?
+      [{
+        field: 'att',
+        longName: 'Attenuation',
+        value: token.payload.att.map(att => JSON.stringify(att, null, ' ')),
+        details: 'Capabilities granted or delegated to the audience'
+      }] : []
 
-        return ({
-          field: 'att',
-          longName: 'Attenuation',
-          value: `${att.cap}, ${resource[0]}: ${resource[1]} `,
-          details: 'A capability granted on a resource to the audience'
-        })
-      }) : []
-
-    const notBefore = token.payload.nbf ?
+    const notBefore: PayloadFieldInfo[] = token.payload.nbf ?
       [{
         field: 'nbf',
         longName: 'Not Before',
-        value: token.payload.nbf,
+        value: [`${token.payload.nbf}`],
         details: 'The UNIX time after which the UCAN is valid. ' +
-          `This UCAN ${isNotValidYet(token) ? 'will be' : 'became'} valid on ${formatDate(token.payload.nbf)}.`
+          `This UCAN ${ucan.isTooEarly(token) ? 'will be' : 'became'} valid on ${formatDate(token.payload.nbf)}.`
       }] : []
 
-    const facts = token.payload.fct ?
+    const facts: PayloadFieldInfo[] = token.payload.fct?.length > 0 ?
       [{
         field: 'fct',
         longName: 'Facts',
-        value: token.payload.fct,
+        value: token.payload.fct.map(fct => JSON.stringify(fct, null, ' ')),
         details: 'Extra facts or information attached to the UCAN'
       }] : []
 
-    const proofs =
+    const proofs: PayloadFieldInfo[] = token.payload.prf.length > 0 ?
       [{
         field: 'prf',
         longName: 'UCAN Proofs',
-        value: token.payload.prf ? 'Select Show Proof to inspect the next UCAN in the chain' : token.payload.prf,
-        details: 'The proof chain of nested UCANs with equal or greater authority to grant the capabilities'
-      }]
+        value: token.payload.prf,
+        details: 'More encoded UCANs used as proofs for delegated capabilities'
+      }] : []
+
+    const nonce: PayloadFieldInfo[] = token.payload.nnc ?
+      [{
+        field: 'nnc',
+        longName: 'Nonce',
+        value: [`${token.payload.nnc}`],
+        details: 'An optional nonce (number used once) used for uniqueness'
+      }] : []
 
     return [
       {
+        field: 'iss',
+        longName: 'Issuer',
+        value: [token.payload.iss],
+        details: 'The DID of the issuer. The UCAN must be signed with the private key of the issuer to be valid.'
+      },
+      {
         field: 'aud',
         longName: 'Audience',
-        value: token.payload.aud,
+        value: [token.payload.aud],
         details: 'The DID of the audience'
       },
       ...attenuations,
@@ -91,19 +102,13 @@ export const payloadFields = (token: Ucan) => {
       {
         field: 'exp',
         longName: 'Expires At',
-        value: token.payload.exp,
+        value: [`${token.payload.exp}`],
         details: 'The UNIX time when the UCAN expires. ' +
           `This UCAN ${ucan.isExpired(token) ? 'expired' : 'expires'} on ${formatDate(token.payload.exp)}.`
       },
-      {
-        field: 'iss',
-        longName: 'Issuer',
-        value: token.payload.iss,
-        details: 'The DID of the issuer. The UCAN must be signed with the private key of the issuer to be valid.'
-      },
       ...notBefore,
       ...proofs,
-      // ...nonce
+      ...nonce
     ]
   } else {
     return []
