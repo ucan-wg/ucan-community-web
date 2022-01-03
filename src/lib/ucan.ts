@@ -1,7 +1,5 @@
 import type { Ucan } from 'ucans'
-
 import * as ucan from 'ucans'
-import * as uint8arrays from 'uint8arrays'
 
 export type Validation = {
   notValidYet: boolean
@@ -28,56 +26,46 @@ export const validate = async (token: string): Promise<{ validation: Validation;
   const notValidYet = ucan.isTooEarly(parsed)
   const active = !ucan.isExpired(parsed)
   const valid = await ucan.verifySignatureUtf8(`${header}.${payload}`, signature, parsed.payload.iss)
+  const { validIssuer, validProofs } = await validateProofs(parsed.payload.prf, token)
 
   return {
     validation: {
       notValidYet,
       active,
       valid,
-      validIssuer: true, // TODO
-      validProofs: true // TODO
+      validIssuer,
+      validProofs,
     },
     ucan: parsed,
   }
 }
 
-// const validateSignature = async (token: Ucan): Promise<boolean> => {
-//   const encodedHeader = ucan.encodeHeader(token.header)
-//   const encodedPayload = ucan.encodePayload(token.payload)
+const validateProofs = async (proofs: string[], delegate: string): Promise<{ validIssuer: boolean; validProofs: boolean }> => {
+  const promisedValidations = await Promise.all(proofs.map(proof => validateProof(proof, delegate)))
+  return promisedValidations.reduce(
+    ({ validIssuer, validProofs }, validation) => ({
+      validIssuer: validIssuer && validation.validIssuer,
+      validProofs: validProofs && validation.validProof,
+    }),
+    { validIssuer: true, validProofs: true }
+  )
+}
 
-//   const data = uint8arrays.fromString(`${encodedHeader}.${encodedPayload}`)
-//   const signature = uint8arrays.fromString(token.signature, 'base64url')
+const validateProof = async (proof: string, delegate: string): Promise<{ validIssuer: boolean; validProof: boolean }> => {
+  const token = await decode(proof)
 
-//   return ucan.verifySignature(data, signature, token.payload.iss)
-// }
+  let validProof: boolean = false
 
-// const validateProofs = (proofs: string[], delegate: string): Promise<[boolean, boolean]> => {
-//   const proofValidations = proofs.map(async proof => await validateProof(proof, delegate))
+  if (token !== null) {
+    try {
+      await ucan.validate(proof)
+      validProof = true
+    } catch {
+    }
+  }
 
-//   return Promise.all(proofValidations).then(promisedValidations =>
-//     promisedValidations.reduce(([validIssuer, validProofs], validation) =>
-//       [validIssuer && validation.validIssuer, validProofs && validation.validProof],
-//       [true, true]
-//     )
-//   )
-// }
-
-// const validateProof = async (proof: string, delegate: string): Promise<{ validIssuer: boolean; validProof: boolean }> => {
-//   const token = await decode(proof)
-
-//   const validIssuer: boolean = token?.payload.aud === delegate ? true : false
-//   let validProof: boolean
-
-//   if (token !== null) {
-//     try {
-//       validProof = await ucan.isValid(token)
-//     } catch {
-//       validProof = false
-//     }
-//   }
-
-//   return {
-//     validIssuer,
-//     validProof
-//   }
-// }
+  return {
+    validIssuer: token?.payload.aud === delegate,
+    validProof
+  }
+}
