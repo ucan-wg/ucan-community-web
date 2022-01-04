@@ -36,7 +36,7 @@
   },
   "type": "module",
   "dependencies": {
-    "ucans": "https://github.com/ucan-wg/ts-ucan#3ca4224b0d1609006035937615b8e5cce3f7d9b6",
+    "ucans": "https://github.com/ucan-wg/ts-ucan#3ea28d444fd5c917345859f72ee1d81615ef788f",
     "uint8arrays": "^3.0.0"
   },
   "ava": {
