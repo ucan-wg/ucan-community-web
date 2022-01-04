@@ -26,7 +26,7 @@ export const validate = async (token: string): Promise<{ validation: Validation;
   const notValidYet = ucan.isTooEarly(parsed)
   const active = !ucan.isExpired(parsed)
   const valid = await ucan.verifySignatureUtf8(`${header}.${payload}`, signature, parsed.payload.iss)
-  const { validIssuer, validProofs } = await validateProofs(parsed.payload.prf, token)
+  const { validIssuer, validProofs } = await validateProofs(parsed.payload.prf, parsed.payload.iss)
 
   return {
     validation: {
