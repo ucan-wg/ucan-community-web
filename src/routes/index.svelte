@@ -25,6 +25,7 @@
 
   import * as explantion from '$lib/explanation'
   import * as ucan from '$lib/ucan'
+  import * as ucans from 'ucans'
   import { formatDate, formatJson } from '$lib/utils'
   import { createProofTree } from '$lib/proof-tree'
   import Proof from '$components/Proof.svelte'
@@ -36,6 +37,9 @@
   let validation: Validation | null = null
   let proofTree: ProofTree = null
   let isMobileDevice: boolean
+  
+  // It's pretty useful to expose UCAN as a constant in the window
+  window["UCAN"] = ucans
 
   onMount(() => {
     setDevice = () => {
