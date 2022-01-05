@@ -61,6 +61,7 @@ const validateProof = async (proof: string, delegate: string): Promise<{ validIs
       await ucan.validate(proof)
       validProof = true
     } catch {
+      validProof = false
     }
   }
 
