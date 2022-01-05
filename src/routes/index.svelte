@@ -95,7 +95,7 @@
   }
 
   $: isValid =
-    validation != null &&
+    validation !== null &&
     validation.notValidYet === false &&
     validation.active === true &&
     validation.valid === true &&
