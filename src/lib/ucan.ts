@@ -19,7 +19,7 @@ export const decode = async (token: string): Promise<Ucan | null> => {
 
 export const validate = async (token: string): Promise<{ validation: Validation; ucan: Ucan } | null> => {
   const parsed = await decode(token)
-  const [header, payload, signature] = token.split(".")
+  const [header, payload, signature] = token.split('.')
   if (parsed == null || header == null || payload == null || signature == null) {
     return null
   }

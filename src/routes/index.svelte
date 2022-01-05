@@ -38,8 +38,9 @@
   let proofTree: ProofTree = null
   let isMobileDevice: boolean
   
-  // It's pretty useful to expose UCAN as a constant in the window
-  window["UCAN"] = ucans
+  // It's pretty useful to expose UCAN as a constant in the window,
+  // so developers can just open up the DevTools on the page and play with the library
+  window['UCAN'] = ucans
 
   onMount(() => {
     setDevice = () => {
