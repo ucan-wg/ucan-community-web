@@ -1,7 +1,7 @@
 import type { Ucan } from 'ucans'
 import type { Validation } from '$lib/ucan'
 
-import { decode, validate } from '$lib/ucan'
+import { validate } from '$lib/ucan'
 
 export type ProofTree = ProofNode | null
 
@@ -22,21 +22,18 @@ export const createProofTree = async (token: string): Promise<ProofTree> => {
 }
 
 const createTree = async (token: string, parent: ProofTree): Promise<ProofTree> => {
-  const ucan = decode(token)
-
-  if (ucan !== null) {
-    const validation: Validation = await validate(ucan)
-
+  const result = await validate(token)
+  if (result != null) {
     const tree: ProofTree = {
       label: '',
       token,
-      ucan,
-      validation,
+      ucan: result.ucan,
+      validation: result.validation,
       parent,
       proofs: []
     }
 
-    const promisedProofs = ucan.payload.prf.map(proof => createTree(proof, tree))
+    const promisedProofs = result.ucan.payload.prf.map(proof => createTree(proof, tree))
     tree.proofs = await Promise.all(promisedProofs)
 
     return tree
