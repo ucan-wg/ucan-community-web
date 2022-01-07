@@ -13,8 +13,7 @@
     StructuredListRow,
     StructuredListCell,
     StructuredListBody,
-    TextArea,
-    UnorderedList,
+    UnorderedList
   } from 'carbon-components-svelte'
   import { truncate } from 'carbon-components-svelte/actions'
   import { onMount } from 'svelte'
@@ -37,7 +36,7 @@
   let validation: Validation | null = null
   let proofTree: ProofTree = null
   let isMobileDevice: boolean
-  
+
   // It's pretty useful to expose UCAN as a constant in the window,
   // so developers can just open up the DevTools on the page and play with the library
   window['UCAN'] = ucans
@@ -125,29 +124,17 @@
 <Row>
   <div class="encode-decode-container">
     <Column>
-      <Row>
-        <Column>
-          <h3>Encoded</h3>
-        </Column>
-      </Row>
-      <Row padding>
-        <Column>
-          <div style="padding-bottom: 5px">Paste an encoded UCAN</div>
-          <TextArea bind:value={encodedUcan} rows={14} on:input={showUcan} />
-        </Column>
-      </Row>
-      {#if encodedUcan === ''}
-        <Row>
-          <Column>
-            <ButtonSet>
-              <Button on:click={showExample}>Show Example</Button>
-              <Button kind="secondary" on:click={showInvalidExample}>
-                Show Invalid Example
-              </Button>
-            </ButtonSet>
-          </Column>
-        </Row>
-      {/if}
+      <div class="encode-section">
+        <h3>Encoded</h3>
+        <div class="encode-container">
+          <div>Paste an encoded UCAN</div>
+          <textarea
+            class="bx--text-area"
+            bind:value={encodedUcan}
+            on:input={showUcan}
+          />
+        </div>
+      </div>
     </Column>
     <Column>
       <Row>
@@ -183,7 +170,18 @@
   </div>
 </Row>
 
-{#if proofTree !== null && encodedUcan !== ''}
+{#if encodedUcan === ''}
+  <Row>
+    <Column>
+      <ButtonSet>
+        <Button on:click={showExample}>Show Example</Button>
+        <Button kind="secondary" on:click={showInvalidExample}>
+          Show Invalid Example
+        </Button>
+      </ButtonSet>
+    </Column>
+  </Row>
+{:else if proofTree !== null}
   <Row>
     <Column>
       <Proof bind:proofTree on:selectproof={showProof} />
@@ -343,6 +341,20 @@
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     grid-gap: 1rem;
     width: 100%;
+  }
+
+  .encode-section {
+    display: grid;
+    grid-template-rows: 2rem minmax(250px, auto);
+    row-gap: 1rem;
+    height: 100%;
+    padding-bottom: 1rem;
+  }
+  
+  .encode-container {
+    display: grid;
+    grid-template-rows: 14px auto;
+    row-gap: 5px;
   }
 
   .validation-errors {
