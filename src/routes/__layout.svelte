@@ -12,16 +12,21 @@
   import '$static/white.css'
   let theme: 'white' = 'white' as const
 
+  let route = document.location.pathname
+  let hash = document.location.hash
+
+  console.log('in __layout: ', route, hash)
+
 </script>
 
 <Theme bind:theme />
 
-<Header />
+<Header {route} {hash}/>
 <Content>
   <Grid>
     <Row>
       <Column>
-          <slot />
+        <slot/>
       </Column>
     </Row>
   </Grid>
@@ -29,6 +34,8 @@
 <Footer />
 
 <style>
+
+/* Styles to normalize how the markdown-sourced content looks */
 
 :global(div.markdown-generated > pre) {
   background-color: #dedede;
@@ -45,19 +52,24 @@
 :global(div.markdown-generated p) {
   font-family:Arial, Helvetica, sans-serif;
   line-height: 1.4em;
-  font-size: large;
   width: 95%;
 }
 
 :global(div.markdown-generated),
 :global(div.markdown-generated > pre),
 :global(div.markdown-generated p), 
-:global(div.markdown-generated ul) {
+:global(div.markdown-generated ul),
+:global(div.markdown-generated a.bx--link) {
   font-size: large;
+}
+
+:global(div.markdown-generated),
+:global(div.markdown-generated > pre),
+:global(div.markdown-generated p), 
+:global(div.markdown-generated ul) {
   margin-bottom: 1.2em;
   margin-top: 1.4em;
 }
-
 
 :global(div.markdown-generated h1), :global(div.markdown-generated h2), :global(div.markdown-generated h3) {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;

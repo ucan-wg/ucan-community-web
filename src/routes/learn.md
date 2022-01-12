@@ -1,15 +1,17 @@
 <script lang="ts">
-  // const code = `let foo = "bar"`;
-  // import Highlight from "svelte-highlight";
-  import HighlightAuto from "svelte-highlight"
-  import Highlight from "svelte-highlight"
+  import { Highlight, HighlightAuto } from "svelte-highlight"
   import typescript from "svelte-highlight/src/languages/typescript";
   import github from "svelte-highlight/src/styles/github";
+  import OutlineHelper from '$components/OutlineHelper.svelte'
+  import { route } from '$lib/nav_store'
+  import { onMount } from 'svelte'
 
+  onMount(() => {
+  })
 
-const yarn_install = `yarn add ucans`;
-const npm_install = `npm install --save`;
-const typscript_eg = `import * as ucan from 'ucans'
+  const yarn_install = `yarn add ucans`;
+  const npm_install = `npm install --save`;
+  const typscript_eg = `import * as ucan from 'ucans'
 
 // in-memory keypair
 const keypair = await ucan.EdKeypair.create()
@@ -44,6 +46,8 @@ const u = await ucan.addSignature(header, payload, signingFn)}`;
 </svelte:head>
 
 <div class="markdown-generated">
+
+<OutlineHelper />
 
 # Getting started
 

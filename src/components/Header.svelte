@@ -10,8 +10,7 @@
     SideNavItems,
     SideNavLink,
     SideNavDivider,
-    SideNavMenu,
-    SideNavMenuItem
+    SideNavMenu
   } from 'carbon-components-svelte'
 
   import { onMount } from 'svelte'
@@ -19,9 +18,12 @@
   let isSideNavOpen = false
 
   let setDevice = () => { return false }
-  let buildDocOutline = (selector : string) => { return  ( selector.length === 0 ) || false }
+  // let buildDocOutline = (selector : string) => { return  ( selector.length === 0 ) || false }
   let isMobileDevice: boolean
   // let deviceType: string
+
+  export let route : string
+  export let hash : string
 
   let siteNavMap = [
     { href: '/', label: 'Introduction' },
@@ -30,7 +32,7 @@
     { href: '/community', label: 'Community' },
     { href: '/about', label: 'About' }
   ]
-  
+
   onMount(() => {
     setDevice = () => {
       if (window.innerWidth < 1056) {
@@ -40,62 +42,7 @@
       }
       return isMobileDevice
     }
-
-    // the start of a function that parses out header tags in the doc and builds a doc buildDocOutline.
-    buildDocOutline = (selector) => {
-      let headers = []
-
-      function createMenuEntry(element : HTMLElement) {
-        let span = document.createElement('span')
-        span.textContent = element.textContent
-        span.className = 'bx--side-nav__link-text'
-
-        let link = document.createElement('a')
-        link.className = 'bx--side-nav__link'
-        link.href = `#${element.id}`
-        link.appendChild(span)
-
-        let item = document.createElement('li')
-        item.className = 'bx--side-nav__menu-item'
-        item.appendChild(link)
-
-        return item
-      }
-
-      function formatId(content : string) {
-        return content.replace(/[\s]/g, '-').toLowerCase().trim()
-      }
-
-      document.querySelectorAll(`${selector} > *`).forEach((el) => {
-        if (el.tagName.toLowerCase().startsWith('h')) {
-          el.id = formatId(el.textContent)
-          headers.push(el)
-        }
-      })
-
-      let subMenu = document.querySelector('.bx--side-nav__submenu')
-
-      if (subMenu) {
-        console.log('Menu!', subMenu)
-        let next = subMenu.nextElementSibling
-        console.log('next!', next)
-
-        headers.forEach(item => {
-          console.log('item!', item)
-          let _el = createMenuEntry(item)
-          console.log(_el)
-          next.appendChild(_el)
-        })
-
-        // console.log(headers)
-
-      }
-      
-      return true
-    }
-
     setDevice()
-    buildDocOutline('div.markdown-generated')
   })
 
 </script>

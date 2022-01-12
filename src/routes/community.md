@@ -2,7 +2,12 @@
   import {
     OutboundLink
   } from 'carbon-components-svelte'
+
+  import OutlineHelper from '$components/OutlineHelper.svelte'
+
 </script>
+
+<OutlineHelper />
 
 <div class="markdown-generated">
 

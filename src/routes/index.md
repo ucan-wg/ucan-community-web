@@ -1,16 +1,11 @@
-<script>
+<script lang="ts">
 import {
 } from 'carbon-components-svelte'
 
+import OutlineHelper from '$components/OutlineHelper.svelte'
 import Highlight from "svelte-highlight"
 import typescript from "svelte-highlight/src/languages/typescript";
 import github from "svelte-highlight/src/styles/github";
-
-/**
-
-TODO: somehow update the side panel doc outline for 
-
-*/
 
 </script>
 
@@ -18,7 +13,11 @@ TODO: somehow update the side panel doc outline for
   {@html github}
 </svelte:head>
 
+<OutlineHelper />
+
 <div class="markdown-generated">
+
+
 
 # Introduction to UCANs
 
@@ -42,8 +41,6 @@ This setup has several advantages:
 UCANs are all that we need to sign into multiple machines, delegate access for service providers to do things while we're offline, securely collaborate on documents with a team, and more. We get the flexibility of fine- or coarse-grained control, all controlled by the one who cares about the data the most: the user.
 
 We've implemented this as the authorization system for Fission, and are also making this available as a building block for developers to solve user authorization and delegation within their own applications.
-
-<a id="data-structure" />
 
 <h2>The UCAN data structure</h2>
 
@@ -76,7 +73,6 @@ This is a standard JWT header, plus the extra `uav` field.
 * alg — the encryption algorithm used to create the UCAN
 * typ — the type of token this is, this will always be 'JWT'
 * uav — "UCAN version" (so we can track the format of when it was issued)
-
 
 
 ### Payload

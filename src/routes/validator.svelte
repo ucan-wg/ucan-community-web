@@ -20,6 +20,7 @@
   import type { Ucan } from 'ucans'
   import type { Validation } from '$lib/ucan'
 
+  import OutlineHelper from '$components/OutlineHelper.svelte'
   import * as explantion from '$lib/explanation'
   import * as ucan from '$lib/ucan'
   import { formatDate, formatJson } from '$lib/utils'
@@ -71,6 +72,8 @@
     validation.validIssuer === true &&
     validation.validProofs === true
 </script>
+
+<OutlineHelper />
 
 <InlineNotification lowContrast kind="info" title="Hey there 👋">
   <div style="padding-top: 5px">
