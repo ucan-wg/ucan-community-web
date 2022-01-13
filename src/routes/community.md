@@ -1,10 +1,9 @@
 <script lang="ts">
-  import {s
+  import {
     OutboundLink
   } from 'carbon-components-svelte'
 
   import OutlineHelper from '$components/OutlineHelper.svelte'
-
 </script>
 
 <OutlineHelper />
