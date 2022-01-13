@@ -33,8 +33,6 @@
     { href: '/about', label: 'About' }
   ]
 
-  let isContent = true
-
   onMount(() => {
     setDevice = () => {
       if (window.innerWidth < 1056) {
@@ -42,13 +40,19 @@
       } else {
         isMobileDevice = false
       }
+
+      // console.log(`isMobileDevice::${isMobileDevice}`)
       return isMobileDevice
     }
     setDevice()
 
-    console.log(`Pathname: ${$route.pathname}`)
+    // console.log(`Pathname: ${$route.pathname}`)
   })
 </script>
+
+<svelte:window
+  on:resize={setDevice}
+/>
 
 <Header company="UCAN" platformName="Distributed Auth" href="/" bind:isSideNavOpen>
   <div slot="skip-to-content">
@@ -72,13 +76,13 @@
   </HeaderUtilities>
 </Header>
 
-{#if $route.pathname === '/validator'} 
+{#if $route.pathname === '/validator'}   
   {#if isMobileDevice}
-    <SideNav bind:isOpen={isSideNavOpen}>
+    <SideNav bind:isOpen={isSideNavOpen}>  
       <SideNavItems>
-          {#each siteNavMap as link}
-            <SideNavLink href="{link.href}" text="{link.label}" />
-          {/each}
+        {#each siteNavMap as link}
+          <SideNavLink href="{link.href}" text="{link.label}" />
+        {/each}
       </SideNavItems>
     </SideNav>
   {/if}
@@ -91,7 +95,7 @@
         {/each}
         <SideNavDivider />
       {/if}
-      <SideNavMenu text="On This Page" expanded={true}></SideNavMenu>  
+      <SideNavMenu text="On This Page" expanded={true}></SideNavMenu>
     </SideNavItems>
   </SideNav>
 {/if}
