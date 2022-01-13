@@ -17,8 +17,6 @@ import github from "svelte-highlight/src/styles/github";
 
 <div class="markdown-generated">
 
-
-
 # Introduction to UCANs
 
 User Controlled Authorization Networks (UCANs) are an extension of the popular [JSON Web Token](https://jwt.io/) format specifically designed to enable ways of authorizing offline-first apps and distributed systems.
@@ -118,8 +116,6 @@ This token is thus valid as long as:
 
 These chains can get large, so you can optionally hash the outermost one before sending it to a server. This acts as a "content address", meaning that if the service hasn't seen it before, it can separately request that token, but if it already has it in cache and doesn't need to get it over the network. Since hashes are much smaller than their content, this can save a lot of bandwidth on repeated requests.
 
-<h4>Next</h4>
-
 </div>
 
 <style>
@@ -134,24 +130,4 @@ These chains can get large, so you can optionally hash the outermost one before 
 :global(.eg-sig) {
   color: blue;
 }
-=======
-<script>
-import {
-  ToastNotification
-} from 'carbon-components-svelte'
-</script>
-
-<ToastNotification 
-  kind="info"
-  title="Introduction"
-  subtitle="This is the introduction"
-/>
-
-# What are UCANs?
-
-User Controlled Authorization Networks (UCANs) are a way of doing authorization where users are fully in control. OAuth is designed for a centralized world, UCAN is the distributed user controlled version.
-
-User Controlled Authorization Networks (UCANs) are an extension of the popular [JSON Web Token](https://jwt.io/) format specifically designed to enable ways of authorizing offline-first apps and distributed systems by providing a set of credentials and permissions in a self-verifiable format.
-
-<style>
 </style>
