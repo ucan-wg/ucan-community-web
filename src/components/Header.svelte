@@ -8,11 +8,46 @@
     HeaderNavItem,
     SideNav,
     SideNavItems,
-    SideNavLink
+    SideNavLink,
+    SideNavDivider,
+    SideNavMenu
   } from 'carbon-components-svelte'
-  import LogoGithub20 from 'carbon-icons-svelte/lib/LogoGithub20'
 
+  import { onMount } from 'svelte'
+  import LogoGithub20 from 'carbon-icons-svelte/lib/LogoGithub20'
   let isSideNavOpen = false
+
+  import { route } from '$lib/nav_store'
+
+  let setDevice = () => { return false }
+  // let buildDocOutline = (selector : string) => { return  ( selector.length === 0 ) || false }
+  let isMobileDevice: boolean
+  // let deviceType: string
+
+  // XXX TODO: investigate how to derive this object from sveltekits internals?
+  let siteNavMap = [
+    { href: '/', label: 'Introduction' },
+    { href: '/validator', label: 'Validator' },
+    { href: '/learn', label: 'Learn' },
+    { href: '/community', label: 'Community' },
+    { href: '/about', label: 'About' }
+  ]
+
+  let isContent = true
+
+  onMount(() => {
+    setDevice = () => {
+      if (window.innerWidth < 1056) {
+        isMobileDevice = true
+      } else {
+        isMobileDevice = false
+      }
+      return isMobileDevice
+    }
+    setDevice()
+
+    console.log(`Pathname: ${$route.pathname}`)
+  })
 </script>
 
 <Header company="UCAN" platformName="Distributed Auth" href="/" bind:isSideNavOpen>
@@ -21,11 +56,10 @@
   </div>
 
   <HeaderNav>
-    <HeaderNavItem href="/" text="Introduction" />
-    <HeaderNavItem href="/tool" text="UCAN Tool" />
-    <HeaderNavItem href="/docs" text="Docs" />
-    <HeaderNavItem href="/community" text="Community" />
-    <HeaderNavItem href="/about" text="About" />
+
+    {#each siteNavMap as link}
+      <HeaderNavItem href="{link.href}" text="{link.label}" />
+    {/each}
   </HeaderNav>
 
   <HeaderUtilities>
@@ -38,14 +72,29 @@
   </HeaderUtilities>
 </Header>
 
-<SideNav bind:isOpen={isSideNavOpen}>
-  <SideNavItems>
-    <SideNavLink href="/" text="Introduction" />
-    <SideNavLink href="/tool" text="UCAN Tool" />
-    <SideNavLink href="/docs" text="Docs" />
-    <SideNavLink href="/community" text="Community" />
-    <SideNavLink href="/about" text="About" />
-  </SideNavItems>
-</SideNav>
+{#if $route.pathname === '/validator'} 
+  {#if isMobileDevice}
+    <SideNav bind:isOpen={isSideNavOpen}>
+      <SideNavItems>
+          {#each siteNavMap as link}
+            <SideNavLink href="{link.href}" text="{link.label}" />
+          {/each}
+      </SideNavItems>
+    </SideNav>
+  {/if}
+{:else} // we are not on the validator tool page
+  <SideNav bind:isOpen={isSideNavOpen}>
+    <SideNavItems>
+      {#if isMobileDevice}
+        {#each siteNavMap as link}
+          <SideNavLink href="{link.href}" text="{link.label}" />
+        {/each}
+        <SideNavDivider />
+      {/if}
+      <SideNavMenu text="On This Page" expanded={true}></SideNavMenu>  
+    </SideNavItems>
+  </SideNav>
+{/if}
 
-<style></style>
+<style>
+</style>
