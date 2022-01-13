@@ -17,6 +17,8 @@
   import LogoGithub20 from 'carbon-icons-svelte/lib/LogoGithub20'
   let isSideNavOpen = false
 
+  import { route } from '$lib/nav_store'
+
   let setDevice = () => { return false }
   // let buildDocOutline = (selector : string) => { return  ( selector.length === 0 ) || false }
   let isMobileDevice: boolean
@@ -31,6 +33,8 @@
     { href: '/about', label: 'About' }
   ]
 
+  let isContent = true
+
   onMount(() => {
     setDevice = () => {
       if (window.innerWidth < 1056) {
@@ -41,6 +45,8 @@
       return isMobileDevice
     }
     setDevice()
+
+    console.log(`Pathname: ${$route.pathname}`)
   })
 </script>
 
@@ -66,23 +72,29 @@
   </HeaderUtilities>
 </Header>
 
-<SideNav bind:isOpen={isSideNavOpen}>
-  <SideNavItems>
-
-    {#if isMobileDevice}
-      {#each siteNavMap as link}
-        <SideNavLink href="{link.href}" text="{link.label}" />
-      {/each}
-      <SideNavDivider />
-    {/if}
-    
-    <!-- TODO: figure out how to create this doc outline based on the headings -->
-    <!-- / etc of the current page  -->
-    <SideNavMenu text="On This Page" expanded={true}>
-      <!-- <SideNavMenuItem text="Intro" href="#intro"/> -->
-    </SideNavMenu>
-  </SideNavItems>
-</SideNav>
+{#if $route.pathname === '/validator'} 
+  {#if isMobileDevice}
+    <SideNav bind:isOpen={isSideNavOpen}>
+      <SideNavItems>
+          {#each siteNavMap as link}
+            <SideNavLink href="{link.href}" text="{link.label}" />
+          {/each}
+      </SideNavItems>
+    </SideNav>
+  {/if}
+{:else} // we are not on the validator tool page
+  <SideNav bind:isOpen={isSideNavOpen}>
+    <SideNavItems>
+      {#if isMobileDevice}
+        {#each siteNavMap as link}
+          <SideNavLink href="{link.href}" text="{link.label}" />
+        {/each}
+        <SideNavDivider />
+      {/if}
+      <SideNavMenu text="On This Page" expanded={true}></SideNavMenu>  
+    </SideNavItems>
+  </SideNav>
+{/if}
 
 <style>
 </style>
