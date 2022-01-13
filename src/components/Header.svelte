@@ -8,13 +8,9 @@
     HeaderNavItem,
     SideNav,
     SideNavItems,
-
     SideNavLink,
     SideNavDivider,
     SideNavMenu
-
-    SideNavLink
-
   } from 'carbon-components-svelte'
 
   import { onMount } from 'svelte'
@@ -26,12 +22,10 @@
   let isMobileDevice: boolean
   // let deviceType: string
 
-  export let route : string
-  export let hash : string
-
+  // XXX TODO: investigate how to derive this object from sveltekits internals?
   let siteNavMap = [
     { href: '/', label: 'Introduction' },
-    { href: '/validator', label: 'UCAN Validator' },
+    { href: '/validator', label: 'Validator' },
     { href: '/learn', label: 'Learn' },
     { href: '/community', label: 'Community' },
     { href: '/about', label: 'About' }
@@ -48,8 +42,6 @@
     }
     setDevice()
   })
-
-  let isSideNavOpen = false
 </script>
 
 <Header company="UCAN" platformName="Distributed Auth" href="/" bind:isSideNavOpen>

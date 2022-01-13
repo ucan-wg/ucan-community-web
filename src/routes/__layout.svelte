@@ -12,17 +12,12 @@
   import '$static/white.css'
   let theme: 'white' = 'white' as const
 
-  let route = document.location.pathname
-  let hash = document.location.hash
-
-  console.log('in __layout: ', route, hash)
-
 </script>
 
 <Theme bind:theme />
 
 
-<Header {route} {hash}/>
+<Header />
 <Content>
   <Grid>
     <Row>
