@@ -8,9 +8,13 @@
     HeaderNavItem,
     SideNav,
     SideNavItems,
+
     SideNavLink,
     SideNavDivider,
     SideNavMenu
+
+    SideNavLink
+
   } from 'carbon-components-svelte'
 
   import { onMount } from 'svelte'
@@ -45,20 +49,16 @@
     setDevice()
   })
 
+  let isSideNavOpen = false
 </script>
 
-<svelte:window on:resize={setDevice} />
-<Header
-  company="UCAN" 
-  platformName="Distributed Auth" 
-  href="/" 
-  bind:isSideNavOpen
->
+<Header company="UCAN" platformName="Distributed Auth" href="/" bind:isSideNavOpen>
   <div slot="skip-to-content">
     <SkipToContent />
   </div>
 
   <HeaderNav>
+
     {#each siteNavMap as link}
       <HeaderNavItem href="{link.href}" text="{link.label}" />
     {/each}
@@ -76,6 +76,7 @@
 
 <SideNav bind:isOpen={isSideNavOpen}>
   <SideNavItems>
+
     {#if isMobileDevice}
       {#each siteNavMap as link}
         <SideNavLink href="{link.href}" text="{link.label}" />
