@@ -16,7 +16,6 @@
 
 <Theme bind:theme />
 
-
 <Header />
 <Content>
   <Grid>

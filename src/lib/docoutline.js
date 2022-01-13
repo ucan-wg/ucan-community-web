@@ -20,7 +20,7 @@ function formatId(content) {
 
 function reset(selector) {
   let _outlineElement = document.querySelector(selector);
-  console.log(`Resetting ${_outlineElement}`)
+  // console.log(`Resetting ${_outlineElement}`)
   _outlineElement.innerHTML = ""
 }
 
@@ -30,9 +30,7 @@ function build(selector) {
   let subMenu = document.querySelector(sel_sidemenu)
 
   if (subMenu) {
-    
     reset(sel_sidemenu)
-    console.log('In build: ', selector);
     let headers = []
   
     // let selector = 'div.markdown-generated'
@@ -42,11 +40,6 @@ function build(selector) {
         headers.push(el)
       }
     })
-
-    console.log("headers", headers)
-
-
-    console.log('Menu!', subMenu)
 
     headers.forEach(item => {
       let _el = createMenuEntry(item)
