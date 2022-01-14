@@ -68,7 +68,7 @@ Let's break down these different parts in more detail.
 
 This is a standard JWT header, plus the extra `uav` field.
 
-s* alg — the encryption algorithm used to create the UCAN
+* alg — the encryption algorithm used to create the UCAN
 * typ — the type of token this is, this will always be 'JWT'
 * uav — "UCAN version" (so we can track the format of when it was issued)
 
