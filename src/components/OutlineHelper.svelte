@@ -5,7 +5,7 @@ import build from '$lib/docoutline'
 import { onMount, tick } from 'svelte'
 
 onMount(() => {
-  console.log(`in OutlineHelper.onMount() ${document.location.pathname}`)
+  // console.log(`in OutlineHelper.onMount() ${document.location.pathname}`)
 
   // set the route store to the current browser state
   route.set({

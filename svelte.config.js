@@ -4,8 +4,6 @@ import adapter from '@sveltejs/adapter-static'
 import { mdsvex } from "mdsvex"
 import remarkHeadingId from 'remark-heading-id'
 
-console.log('from build script', remarkHeadingId)
-
 // import { plugin: mdPlugin, Mode } from 'vite-plugin-markdown'
 
 /** @type {import('@sveltejs/kit').Config} */
