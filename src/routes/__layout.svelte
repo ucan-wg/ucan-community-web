@@ -89,4 +89,16 @@
   color: red;
 }
 
+@media only screen and (max-width: 1056px)  {
+
+  :global(main.bx--content) {
+    padding: 0rem;
+    margin-left: 2.0rem !important;
+  }
+
+  :global(div.bx--grid) {
+    padding: 0;
+  }
+}
+
 </style>
