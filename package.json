@@ -21,9 +21,12 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-svelte3": "^3.2.1",
+    "mdsvex": "^0.9.8",
     "one-webcrypto": "^1.0.1",
     "prettier": "~2.2.1",
     "prettier-plugin-svelte": "^2.2.0",
+    "rehype-autolink-headings": "^6.1.0",
+    "remark-heading-id": "^1.0.0",
     "svelte": "^3.34.0",
     "svelte-check": "^2.0.0",
     "svelte-preprocess": "^4.0.0",
@@ -37,6 +40,7 @@
   "type": "module",
   "dependencies": {
     "ucans": "https://github.com/ucan-wg/ts-ucan#3ea28d444fd5c917345859f72ee1d81615ef788f",
+    "svelte-highlight": "^5.1.3",
     "uint8arrays": "^3.0.0"
   },
   "ava": {

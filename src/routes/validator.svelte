@@ -28,6 +28,7 @@
   import { formatDate, formatJson } from '$lib/utils'
   import { createProofTree } from '$lib/proof-tree'
   import Proof from '$components/Proof.svelte'
+  import OutlineHelper from '$components/OutlineHelper.svelte'
 
   let setDevice = () => {}
 
@@ -103,6 +104,8 @@
 </script>
 
 <svelte:window on:resize={setDevice} />
+
+<OutlineHelper />
 
 <InlineNotification lowContrast kind="info" title="Hey there 👋">
   <div style="padding-top: 5px">

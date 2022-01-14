@@ -3,15 +3,69 @@
     SkipToContent,
     Header,
     HeaderActionLink,
-    HeaderUtilities
+    HeaderUtilities,
+    HeaderNav,
+    HeaderNavItem,
+    SideNav,
+    SideNavItems,
+    SideNavLink,
+    SideNavDivider,
+    SideNavMenu
   } from 'carbon-components-svelte'
+
+  import { onMount } from 'svelte'
   import LogoGithub20 from 'carbon-icons-svelte/lib/LogoGithub20'
+  let isSideNavOpen = false
+
+  import { route } from '$lib/nav_store'
+
+  let setDevice = () => { return false }
+  // let buildDocOutline = (selector : string) => { return  ( selector.length === 0 ) || false }
+  let isMobileDevice: boolean
+  // let deviceType: string
+
+  // XXX TODO: investigate how to derive this object from sveltekits internals?
+  let siteNavMap = [
+    { href: '/', label: 'Introduction' },
+    { href: '/validator', label: 'Validator' },
+    { href: '/learn', label: 'Learn' },
+    { href: '/community', label: 'Community' },
+    { href: '/about', label: 'About' }
+  ]
+
+  onMount(() => {
+    setDevice = () => {
+      if (window.innerWidth < 1056) {
+        isMobileDevice = true
+      } else {
+        isMobileDevice = false
+      }
+
+      // console.log(`isMobileDevice::${isMobileDevice}`)
+      return isMobileDevice
+    }
+    setDevice()
+
+    // console.log(`Pathname: ${$route.pathname}`)
+  })
 </script>
 
-<Header company="UCAN" platformName="Distributed Auth" href="/">
+<svelte:window
+  on:resize={setDevice}
+/>
+
+<Header company="UCAN" platformName="Distributed Auth" href="/" bind:isSideNavOpen>
   <div slot="skip-to-content">
     <SkipToContent />
   </div>
+
+  <HeaderNav>
+
+    {#each siteNavMap as link}
+      <HeaderNavItem href="{link.href}" text="{link.label}" />
+    {/each}
+  </HeaderNav>
+
   <HeaderUtilities>
     <HeaderActionLink
       aria-label="GitHub Repository"
@@ -21,6 +75,30 @@
     />
   </HeaderUtilities>
 </Header>
+
+{#if $route.pathname === '/validator'}   
+  {#if isMobileDevice}
+    <SideNav bind:isOpen={isSideNavOpen}>  
+      <SideNavItems>
+        {#each siteNavMap as link}
+          <SideNavLink href="{link.href}" text="{link.label}" />
+        {/each}
+      </SideNavItems>
+    </SideNav>
+  {/if}
+{:else} // we are not on the validator tool page
+  <SideNav bind:isOpen={isSideNavOpen}>
+    <SideNavItems>
+      {#if isMobileDevice}
+        {#each siteNavMap as link}
+          <SideNavLink href="{link.href}" text="{link.label}" />
+        {/each}
+        <SideNavDivider />
+      {/if}
+      <SideNavMenu text="On This Page" expanded={true}></SideNavMenu>
+    </SideNavItems>
+  </SideNav>
+{/if}
 
 <style>
 </style>
