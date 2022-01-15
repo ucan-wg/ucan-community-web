@@ -21,9 +21,9 @@ import github from "svelte-highlight/src/styles/github";
 
 User Controlled Authorization Networks (UCANs) are an extension of the popular [JSON Web Token](https://jwt.io/) format specifically designed to enable ways of authorizing offline-first apps and distributed systems.
 
-At a high level, User Controlled Authorization Networks (UCANs) are a way of doing authorization ("what you can do") where users are fully in control. There's no all-powerful authorization server, or server of any kind required. Everything that a users is allowed to do is captured directly in a key or token, and can be sent to anyone that knows how to interpret this format.
+At a high level, User Controlled Authorization Networks (UCANs) are a way of doing authorization ("what you can do") where users are fully in control. There's no all-powerful authorization server, or server of any kind required. Everything that a user is allowed to do is captured directly in a key or token, and can be sent to anyone that knows how to interpret this format.
 
-Since all Fission accounts are equipped with a global ID and cryptographic keys, we were able to design a system that has very few assumptions and thus works in a huge number of situations.
+Since all accounts are equipped with a global ID and cryptographic keys, we were able to design a system that has very few assumptions and thus works in a huge number of situations.
 
 This setup has several advantages:
 
@@ -36,7 +36,7 @@ This setup has several advantages:
 * Collaborative: users and services and delegate a subset of their access to others
 * Self-contained: the token contains all the information needed to verify it
 
-UCANs are all that we need to sign into multiple machines, delegate access for service providers to do things while we're offline, securely collaborate on documents with a team, and more. We get the flexibility of fine- or coarse-grained control, all controlled by the one who cares about the data the most: the user.
+UCANs are all you need to sign into multiple machines, delegate access for service providers to do things while you are offline, securely collaborate on documents with a team, and more. You get the flexibility of fine- or coarse-grained control, all controlled by the one who cares about the data the most: the user.
 
 We've implemented this as the authorization system for Fission, and are also making this available as a building block for developers to solve user authorization and delegation within their own applications.
 
@@ -62,7 +62,7 @@ Let's break down these different parts in more detail.
 {
   "alg": "Ed25519",
   "typ": "JWT"
-  "uav": "0.1.0"
+  "ucv": "0.7.0"
 }
 ```
 
@@ -86,14 +86,18 @@ This is a standard JWT header, plus the extra `uav` field.
   "prf": null,
 }
 ```
+<br/>
 
- * aud "Audience" — the ID of who it's intended for (the "to" field)
- * iss "Issuer" — ID of who sent it (the "from" field)
- * nbf "Not Before" — Unix timestamp of when it becomes valid (typically when it was created, but not always)
- * exp "Expiry" — Unix timestamp of when it stops being valid
- * scp "Scope" — The scope of things it's able to change (e.g. a file system path)
- * ptc "Potency" — what rights come with the token (in this case it's append only)
- * prf "Proof" — an optional nested token with equal or greater privileges
+|Field| Name | Description
+|-----|---------------|------------------------------------------------------------------------------------------|
+|aud  | "Audience"    |the ID of who it's intended for (the "to" field)
+|iss  | "Issuer"      |ID of who sent it (the "from" field)
+|nbf  | "Not before"  |Unix timestamp of when it becomes valid (typically when it was created, but not always)
+|exp  | "Expiry"      |Unix timestamp of when it stops being valid
+|scp  | "Scope"       |The scope of things it's able to change (e.g. a file system path)
+|ptc  | "Potency"     |what rights come with the token (in this case it's append only)
+|prf  | "Proof"       |an optional nested token with equal or greater privileges
+<br/>
 
 ### Signature
 
