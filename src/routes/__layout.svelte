@@ -78,7 +78,7 @@
 }
 
 :global(div.markdown-generated a) {
-  color: #343434;
+  color: blue;
 }
 
 :global(div.markdown-generated a:visited) {
@@ -87,6 +87,30 @@
 
 :global(div.markdown-generated a:hover) {
   color: red;
+}
+
+@media only screen and (max-width: 1056px)  {
+
+  :global(main.bx--content) {
+    padding: 0rem;
+    margin-left: 2.0rem !important;
+  }
+
+  :global(div.bx--grid) {
+    padding: 0;
+  }
+}
+
+:global(table), :global(td), :global(th) {
+ border: 2px solid #787878;
+ padding: 2px;
+ text-align: left;;
+}
+
+:global(th) {
+  background-color: #787878;
+  color: #efefef;
+  font-weight: bold;
 }
 
 </style>

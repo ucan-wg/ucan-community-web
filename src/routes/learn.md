@@ -6,6 +6,10 @@
   import { route } from '$lib/nav_store'
   import { onMount } from 'svelte'
 
+  import {
+    OutboundLink
+  } from 'carbon-components-svelte'
+
   onMount(() => {
   })
 
@@ -55,11 +59,11 @@ The `ucans` library is a typescript utility that provides support for both parsi
 
 ## Installation
 
-### NPM:
+### NPM
 
 <HighlightAuto code={npm_install} />
 
-### yarn:
+### yarn
 
 <HighlightAuto code={yarn_install} />
 
@@ -71,8 +75,11 @@ Typescript:
 
 ### Next steps
 
- * [`ucans` library github repo](https://github.com/ucan-wg/ucan-check)
- * [Fission Whitepaper](https://whitepaper.fission.codes/authorization/id-overview)
+ * <OutboundLink href="">`ucans` library github repository</OutboundLink>
+ * <OutboundLink href="https://github.com/ucan-wg/spec">ucan spec repository</OutboundLink>
+ * <OutboundLink href="https://whitepaper.fission.codes/authorization/id-overview">Fission Whitepaper</OutboundLink>
+
+ If you are using ucans in your work and have ideas for improvement, please consider adding any ideas for improvement to the UCAN Improvement Proposal repository: <OutboundLink href="https://github.com/ucan-wg/UIPs">github.com/ucan-wg/UIPs</OutboundLink>
 
 </div>
 <style>
