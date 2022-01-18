@@ -26,12 +26,12 @@ test('validates a ucan', async t => {
     lifetimeInSeconds: 1000
   })
 
-  const result = await validate(token)
+  const { validation } = await validate(ucan.encode(token))
 
-  t.is(result.active, true)
-  t.is(result.valid, true)
-  t.is(result.validIssuer, true)
-  t.is(result.validProofs, true)
+  t.is(validation.active, true)
+  t.is(validation.valid, true)
+  t.is(validation.validIssuer, true)
+  t.is(validation.validProofs, true)
 })
 
 test('validates a delegated ucan', async t => {
@@ -60,12 +60,12 @@ test('validates a delegated ucan', async t => {
     proofs: [ucan.encode(rootToken)]
   })
 
-  const result = await validate(delegateToken)
+  const { validation } = await validate(ucan.encode(delegateToken))
 
-  t.is(result.active, true)
-  t.is(result.valid, true)
-  t.is(result.validIssuer, true)
-  t.is(result.validProofs, true)
+  t.is(validation.active, true)
+  t.is(validation.valid, true)
+  t.is(validation.validIssuer, true)
+  t.is(validation.validProofs, true)
 })
 
 
@@ -114,12 +114,12 @@ test('validates a delegated ucan with two proofs', async t => {
     ]
   })
 
-  const result = await validate(delegateToken)
+  const { validation } = await validate(ucan.encode(delegateToken))
 
-  t.is(result.active, true)
-  t.is(result.valid, true)
-  t.is(result.validIssuer, true)
-  t.is(result.validProofs, true)
+  t.is(validation.active, true)
+  t.is(validation.valid, true)
+  t.is(validation.validIssuer, true)
+  t.is(validation.validProofs, true)
 })
 
 
@@ -138,9 +138,9 @@ test('identifies a ucan that is not valid yet', async t => {
     expiration: 2637352774
   })
 
-  const result = await validate(token)
+  const { validation } = await validate(ucan.encode(token))
 
-  t.is(result.notValidYet, true)
+  t.is(validation.notValidYet, true)
 })
 
 test('identifies an expired ucan', async t => {
@@ -156,9 +156,9 @@ test('identifies an expired ucan', async t => {
     lifetimeInSeconds: 0
   })
 
-  const result = await validate(token)
+  const { validation } = await validate(ucan.encode(token))
 
-  t.is(result.active, false)
+  t.is(validation.active, false)
 })
 
 test('identifies an invalid signature', async t => {
@@ -177,9 +177,9 @@ test('identifies an invalid signature', async t => {
   // Invalid signature
   token.signature = 'PJf68hYl0_JaoMCTkNIavTwrxB98hRFoNh8jWH8rW7rQFmhge3Y4kbXnp0gLPGNBFZzQfgbdUHaS6xZrTfBdAg=='
 
-  const result = await validate(token)
+  const { validation } = await validate(ucan.encode(token))
 
-  t.is(result.valid, false)
+  t.is(validation.valid, false)
 })
 
 test('identifies a mismatched delegate', async t => {
@@ -209,9 +209,9 @@ test('identifies a mismatched delegate', async t => {
     proofs: [ucan.encode(rootToken)]
   })
 
-  const result = await validate(delegateToken)
+  const { validation } = await validate(ucan.encode(delegateToken))
 
-  t.is(result.validIssuer, false)
+  t.is(validation.validIssuer, false)
 })
 
 test('identifies when any proof has a mistmatched delegate', async t => {
@@ -260,9 +260,9 @@ test('identifies when any proof has a mistmatched delegate', async t => {
     ]
   })
 
-  const result = await validate(delegateToken)
+  const { validation } = await validate(ucan.encode(delegateToken))
 
-  t.is(result.validIssuer, false)
+  t.is(validation.validIssuer, false)
 })
 
 test('identifies an invalid proof', async t => {
@@ -294,9 +294,9 @@ test('identifies an invalid proof', async t => {
     proofs: [ucan.encode(rootToken)]
   })
 
-  const result = await validate(delegateToken)
+  const { validation } = await validate(ucan.encode(delegateToken))
 
-  t.is(result.validProofs, false)
+  t.is(validation.validProofs, false)
 })
 
 test('identifies when any proof is invalid', async t => {
@@ -347,9 +347,9 @@ test('identifies when any proof is invalid', async t => {
     ]
   })
 
-  const result = await validate(delegateToken)
+  const { validation } = await validate(ucan.encode(delegateToken))
 
-  t.is(result.validProofs, false)
+  t.is(validation.validProofs, false)
 })
 
 test('identifies multiple issues', async t => {
@@ -385,10 +385,10 @@ test('identifies multiple issues', async t => {
   // Invalid signature
   delegateToken.signature = 'PJf68hYl0_JaoMCTkNIavTwrxB98hRFoNh8jWH8rW7rQFmhge3Y4kbXnp0gLPGNBFZzQfgbdUHaS6xZrTfBdAg=='
 
-  const result = await validate(delegateToken)
+  const { validation } = await validate(ucan.encode(delegateToken))
 
-  t.is(result.active, false)
-  t.is(result.valid, false)
-  t.is(result.validIssuer, false)
-  t.is(result.validProofs, false)
+  t.is(validation.active, false)
+  t.is(validation.valid, false)
+  t.is(validation.validIssuer, false)
+  t.is(validation.validProofs, false)
 })
