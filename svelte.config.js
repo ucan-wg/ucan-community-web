@@ -25,7 +25,6 @@ const config = {
       assets: 'build',
       fallback: null
     }),
-    target: '#svelte',
     vite: {
       optimizeDeps: {
         include: ["highlight.js/lib/core"], 
