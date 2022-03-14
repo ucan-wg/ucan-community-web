@@ -20,9 +20,7 @@
   import { route } from '$lib/nav_store'
 
   let setDevice = () => { return false }
-  // let buildDocOutline = (selector : string) => { return  ( selector.length === 0 ) || false }
   let isMobileDevice: boolean
-  // let deviceType: string
 
   // XXX TODO: investigate how to derive this object from sveltekits internals?
   let siteNavMap = [
@@ -41,12 +39,10 @@
         isMobileDevice = false
       }
 
-      // console.log(`isMobileDevice::${isMobileDevice}`)
       return isMobileDevice
     }
-    setDevice()
 
-    // console.log(`Pathname: ${$route.pathname}`)
+    setDevice()
   })
 </script>
 

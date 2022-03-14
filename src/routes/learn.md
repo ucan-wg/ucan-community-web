@@ -1,17 +1,12 @@
 <script lang="ts">
-  import { Highlight, HighlightAuto } from "svelte-highlight"
-  import typescript from "svelte-highlight/src/languages/typescript";
   import github from "svelte-highlight/src/styles/github";
+  import typescript from "svelte-highlight/src/languages/typescript";
+  import { Highlight, HighlightAuto } from "svelte-highlight"
+  import { OutboundLink } from 'carbon-components-svelte'
+
   import OutlineHelper from '$components/OutlineHelper.svelte'
-  import { route } from '$lib/nav_store'
   import { onMount } from 'svelte'
-
-  import {
-    OutboundLink
-  } from 'carbon-components-svelte'
-
-  onMount(() => {
-  })
+  import { route } from '$lib/nav_store'
 
   const yarn_install = `yarn add ucans`;
   const npm_install = `npm install --save`;
@@ -82,5 +77,6 @@ Typescript:
  If you are using ucans in your work and have ideas for improvement, please consider adding any ideas for improvement to the UCAN Improvement Proposal repository: <OutboundLink href="https://github.com/ucan-wg/UIPs">github.com/ucan-wg/UIPs</OutboundLink>
 
 </div>
+
 <style>
 </style>
