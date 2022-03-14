@@ -12,9 +12,9 @@ With UCAN Check, you can:
 
 ## Try it
 
-UCAN Check is live at: https://ucancheck.fission.app/
+UCAN Check is live at: https://ucan.xyz
 
-# Setup
+## Setup
 
 Install dependencies.
 
