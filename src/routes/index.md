@@ -1,12 +1,8 @@
 <script lang="ts">
-import {
-} from 'carbon-components-svelte'
-
-import OutlineHelper from '$components/OutlineHelper.svelte'
-import Highlight from "svelte-highlight"
-import typescript from "svelte-highlight/src/languages/typescript";
-import github from "svelte-highlight/src/styles/github";
-
+  import github from "svelte-highlight/src/styles/github";
+  import Highlight from "svelte-highlight"
+  import typescript from "svelte-highlight/src/languages/typescript";
+  import OutlineHelper from '$components/OutlineHelper.svelte'
 </script>
 
 <svelte:head>

@@ -1,39 +1,36 @@
-function createMenuEntry(element) {
-  let span = document.createElement('span')
+function createMenuEntry(element: Element): HTMLLIElement {
+  const span = document.createElement('span')
   span.textContent = element.textContent
   span.className = 'bx--side-nav__link-text'
 
-  let link = document.createElement('a')
+  const link = document.createElement('a')
   link.className = 'bx--side-nav__link'
   link.href = `#${element.id}`
   link.appendChild(span)
 
-  let item = document.createElement('li')
+  const item = document.createElement('li')
   item.className = 'bx--side-nav__menu-item'
   item.appendChild(link)
   return item
 }
 
-function formatId(content) {
+function formatId(content: string): string {
   return content.replace(/[\s]/g, '-').toLowerCase().trim()
 }
 
-function reset(selector) {
-  let _outlineElement = document.querySelector(selector);
-  // console.log(`Resetting ${_outlineElement}`)
-  _outlineElement.innerHTML = ""
+function reset(selector: string): void {
+  const _outlineElement = document.querySelector(selector)
+  _outlineElement.innerHTML = ''
 }
 
-function build(selector) {
-
-  let sel_sidemenu = '.bx--side-nav__menu'
-  let subMenu = document.querySelector(sel_sidemenu)
+function build(selector: string): boolean {
+  const sel_sidemenu = '.bx--side-nav__menu'
+  const subMenu = document.querySelector(sel_sidemenu)
 
   if (subMenu) {
     reset(sel_sidemenu)
-    let headers = []
+    const headers: Element[] = []
   
-    // let selector = 'div.markdown-generated'
     document.querySelectorAll(`${selector} > *`).forEach((el) => {
       if (el.tagName.toLowerCase().startsWith('h')) {
         el.id = formatId(el.textContent)
@@ -42,7 +39,7 @@ function build(selector) {
     })
 
     headers.forEach(item => {
-      let _el = createMenuEntry(item)
+      const _el = createMenuEntry(item)
       subMenu.appendChild(_el)
     })
   }
@@ -50,4 +47,4 @@ function build(selector) {
   return true
 }
 
-export default build
+export { build }
