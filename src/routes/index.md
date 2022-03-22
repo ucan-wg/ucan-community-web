@@ -29,7 +29,7 @@ This setup has several advantages:
 * Flexible: access can be granted as coarse or granular as the end users wants
 * Scalable: no auth server bottleneck / scales infinitely
 * Secure: military-grade encryption
-* Collaborative: users and services and delegate a subset of their access to others
+* Collaborative: users and services can delegate a subset of their access to others
 * Self-contained: the token contains all the information needed to verify it
 
 UCANs are all you need to sign into multiple machines, delegate access for service providers to do things while you are offline, securely collaborate on documents with a team, and more. You get the flexibility of fine- or coarse-grained control, all controlled by the one who cares about the data the most: the user.
