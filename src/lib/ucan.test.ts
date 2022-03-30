@@ -392,3 +392,110 @@ test('identifies multiple issues', async t => {
   t.is(validation.validIssuer, false)
   t.is(validation.validProofs, false)
 })
+
+test('generate valid example to show in app', async t => {
+  const rootTokenOne = await ucan.build({
+    audience: t.context.child.did(),
+    issuer: t.context.root,
+    capabilities: [
+      {
+        'wnfs': 'demouser.fission.name/public/photos/',
+        'cap': 'OVERWRITE'
+      }
+    ],
+    expiration: 9256939505
+  })
+
+  const rootTokenTwo = await ucan.build({
+    audience: t.context.child.did(),
+    issuer: t.context.root,
+    capabilities: [
+      {
+        'wnfs': 'demouser.fission.name/public/notes/',
+        'cap': 'OVERWRITE'
+      }
+    ],
+    expiration: 9256939505
+  })
+
+  const delegateToken = await ucan.build({
+    audience: t.context.ancestor.did(),
+    issuer: t.context.child,
+    capabilities: [
+      {
+        'wnfs': 'demouser.fission.name/public/photos/',
+        'cap': 'OVERWRITE'
+      },
+      {
+        'wnfs': 'demouser.fission.name/public/notes/',
+        'cap': 'OVERWRITE'
+      }
+    ],
+    expiration: 9256939505,
+    proofs: [
+      ucan.encode(rootTokenOne),
+      ucan.encode(rootTokenTwo)
+    ]
+  })
+
+  // console.log(ucan.encode(delegateToken))
+
+  const { validation } = await validate(ucan.encode(delegateToken))
+
+  t.is(validation.active, true)
+  t.is(validation.valid, true)
+  t.is(validation.validIssuer, true)
+  t.is(validation.validProofs, true)
+})
+
+test('generate invalid example to show in app', async t => {
+  const rootToken = await ucan.build({
+    // Delegates to ancestor not child
+    audience: t.context.ancestor.did(),
+    issuer: t.context.root,
+    capabilities: [
+      {
+        'wnfs': 'demouser.fission.name/public/photos/',
+        'cap': 'OVERWRITE'
+      }
+    ],
+    expiration: 9256939505 
+  })
+
+  // Invalid signature
+  rootToken.signature = 'PJf68hYl0_JaoMCTkNIavTwrxB98hRFoNh8jWH8rW7rQFmhge3Y4kbXnp0gLPGNBFZzQfgbdUHaS6xZrTfBdAg=='
+
+  const rootTokenTwo = await ucan.build({
+    audience: t.context.child.did(),
+    issuer: t.context.root,
+    capabilities: [
+      {
+        'wnfs': 'demouser.fission.name/public/notes/',
+        'cap': 'OVERWRITE'
+      }
+    ],
+    expiration: 9256939505
+  })
+
+  const delegateToken = await ucan.build({
+    audience: t.context.ancestor.did(),
+    issuer: t.context.child,
+    capabilities: [
+      {
+        'wnfs': 'demouser.fission.name/public/photos/',
+        'cap': 'OVERWRITE'
+      }
+    ],
+    expiration: 9256939505,
+    proofs: [
+      ucan.encode(rootToken),
+      'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCIsInVjdiI6IjAuNy4wIn0.eyJhdWQiOiJkaWQ6a2V5Ono2TWt2cU52QzZTdWMyanFyczFEa3hIUVUxSm9VXZlUnE4Y2NnRWQ0RmpqVnZaIiwibmJmIjoxNjM5NjA4NzkzLCJwcmYiOltdfQ.yVYw8ctSDGb2lxeSL907OmnMYUNWyCb9TeFgGlgNb09tvhTAdM46zJILmp--cktsyHZfTnB-UUQE2QNZX5ZuAA', // encoding error
+      ucan.encode(rootTokenTwo),
+    ]
+  })
+
+  // console.log(ucan.encode(delegateToken))
+
+  // TODO: Add expectation that this throws because one of the proofs has a bad encoding
+  t.is(false, false)
+})
