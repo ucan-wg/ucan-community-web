@@ -9,7 +9,7 @@ export const headerFields = (token: Ucan) => {
     const ucv = token.header.ucv ?
       [{
         field: 'ucv',
-        longName: 'UCAN Version',
+        longName: 'UCAN Semantic Version',
         value: token.header.ucv,
         details: 'The UCAN version'
       }] : []
@@ -47,8 +47,8 @@ export const payloadFields = (token: Ucan): PayloadFieldInfo[] => {
       [{
         field: 'att',
         longName: 'Attenuation',
-        value: token.payload.att.map(att => JSON.stringify(att, null, ' ')),
-        details: 'Capabilities granted or delegated to the audience'
+        value: token.payload.att.map(cap => JSON.stringify(ucan.capability.encode(cap), null, ' ')),
+        details: 'Capabilities delegated to the audience by the issuer'
       }] : []
 
     const notBefore: PayloadFieldInfo[] = token.payload.nbf ?
@@ -71,9 +71,9 @@ export const payloadFields = (token: Ucan): PayloadFieldInfo[] => {
     const proofs: PayloadFieldInfo[] = token.payload.prf.length > 0 ?
       [{
         field: 'prf',
-        longName: 'UCAN Proofs',
+        longName: 'Proof of Delegation',
         value: token.payload.prf,
-        details: 'More encoded UCANs used as proofs for delegated capabilities'
+        details: 'Encoded UCANs used as proof for delegated capabilities'
       }] : []
 
     const nonce: PayloadFieldInfo[] = token.payload.nnc ?
@@ -101,7 +101,7 @@ export const payloadFields = (token: Ucan): PayloadFieldInfo[] => {
       ...facts,
       {
         field: 'exp',
-        longName: 'Expires At',
+        longName: 'Expiration',
         value: [`${token.payload.exp}`],
         details: 'The UNIX time when the UCAN expires. ' +
           `This UCAN ${ucan.isExpired(token) ? 'expired' : 'expires'} on ${formatDate(token.payload.exp)}.`

@@ -12,7 +12,8 @@ export type Validation = {
 export const decode = async (token: string): Promise<Ucan | null> => {
   try {
     return await ucan.validate(token, { checkIsExpired: false, checkIsTooEarly: false, checkSignature: false })
-  } catch {
+  } catch (err) {
+    console.log(err)
     return null
   }
 }
