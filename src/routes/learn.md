@@ -70,7 +70,7 @@ Typescript:
 
 ### Next steps
 
- * <OutboundLink href="">`ucans` library github repository</OutboundLink>
+ * <OutboundLink href="https://github.com/ucan-wg/ts-ucan">`ucans` library github repository</OutboundLink>
  * <OutboundLink href="https://github.com/ucan-wg/spec">ucan spec repository</OutboundLink>
  * <OutboundLink href="https://whitepaper.fission.codes/authorization/id-overview">Fission Whitepaper</OutboundLink>
 
