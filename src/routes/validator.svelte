@@ -107,17 +107,6 @@
 
 <OutlineHelper />
 
-<InlineNotification lowContrast kind="info" title="Hey there 👋">
-  <div style="padding-top: 5px">
-    You are using a preview version of UCAN Check. This version only supports
-    the latest UCAN version. Try out the
-    <Link href="https://github.com/ucan-wg/ts-ucan" target="_blank">
-      UCAN library
-    </Link>
-    to make some!
-  </div>
-</InlineNotification>
-
 <Row padding>
   <Column>
     <h2>UCAN Check</h2>
