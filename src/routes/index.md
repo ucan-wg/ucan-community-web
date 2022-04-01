@@ -56,9 +56,9 @@ Let's break down these different parts in more detail.
 
 ```
 {
-  "alg": "Ed25519",
-  "typ": "JWT"
-  "ucv": "0.7.0"
+  "alg": "EdDSA",
+  "typ": "JWT",
+  "ucv": "0.8.1"
 }
 ```
 
@@ -73,26 +73,33 @@ This is a standard JWT header, plus the extra `ucv` field.
 
 ```
 {
-  "aud": "did:key:zStEZpzSMtTt9k2vszgvCwF4fLQQSyA15W5AQ4z3AR6Bx4eFJ5crJFbuGxKmbma4",
-  "iss": "did:key:z5C4fuP2DDJChhMBCwAkpYUMuJZdNWWH5NeYjUyY8btYfzDh3aHwT5picHr9Ttjq",
-  "nbf": 1588713622,
-  "exp": 1589000000,
-  "scp": "/"
-  "ptc": "APPEND",
-  "prf": null,
+  "iss": "did:key:z6Mkr5aefin1DzjG7MBJ3nsFCsnvHKEvTb2C4YAJwbxt1jFS",
+  "aud": "did:key:z6MkfQhLHBSFMuR7bQXTQeqe5kYUW51HpfZeaymgy1zkP2jM",
+  "nbf": 1529496683,
+  "exp": 9256939505,
+  "att": [
+    {
+      "with": "wnfs://demouser.fission.name/public/photos/",
+      "can": "wnfs/OVERWRITE"
+    },
+    {
+      "with": "wnfs://demouser.fission.name/public/notes/",
+      "can": "wnfs/OVERWRITE"
+    }
+  ],
+  "prf": []
 }
 ```
 <br/>
 
 |Field| Name | Description
 |-----|---------------|------------------------------------------------------------------------------------------|
-|aud  | "Audience"    |the ID of who it's intended for (the "to" field)
 |iss  | "Issuer"      |ID of who sent it (the "from" field)
+|aud  | "Audience"    |the ID of who it's intended for (the "to" field)
 |nbf  | "Not before"  |Unix timestamp of when it becomes valid (typically when it was created, but not always)
-|exp  | "Expiry"      |Unix timestamp of when it stops being valid
-|scp  | "Scope"       |The scope of things it's able to change (e.g. a file system path)
-|ptc  | "Potency"     |what rights come with the token (in this case it's append only)
-|prf  | "Proof"       |an optional nested token with equal or greater privileges
+|exp  | "Expiration"      |Unix timestamp of when it stops being valid
+|att  | "Attenuation"       |capabilities delegated to the audience by the issuer
+|prf  | "Proof of Delegation"       |an array of nested token with equal or greater privileges
 <br/>
 
 ### Signature
@@ -103,13 +110,14 @@ These are then all signed with the user's private key. This key must match the p
 
 What if you want to grant another user or service the ability to perform some action on your behalf? As long as they have a valid UCAN, they can wrap it in another with equal or lesser rights and include the original in the prf field.
 
-Since every UCAN layer is self-signed, we can trace back to the root (no prf field), and know who the delegate is acting as. This chain of tokens is itself is the proof that you're perform some action. The nested proof is encoded as a bearer token. This is because it needs to include its signature to prove that it's valid, and a JWT signature is on the content encoded this way.
+Since every UCAN layer is self-signed, we can trace back to the root (empty prf field), and know who the delegate is acting as. This chain of tokens is itself is the proof that you can perform some action. The nested proof is encoded as a bearer token. This is because it needs to include its signature to prove that it's valid, and a JWT signature is on the content encoded this way.
 
 This token is thus valid as long as:
 
  * All token signatures are correct
- * The time range, potency, and scope of prf are greater-or-equal to the enclosing token
- * The outer token's iss field matches the prf's aud field (chain "to" and "from" correctly)
+ * The time range falls within the time bounds of the prf tokens
+ * The attenuation is less-or-equal than the capabilities granted by the prf tokens
+ * The outer token's iss field matches the aud field of each prf token (chain "to" and "from" correctly)
  * The timestamps are valid at the present time
 
 ## Hashing

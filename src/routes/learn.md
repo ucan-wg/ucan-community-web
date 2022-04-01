@@ -15,28 +15,28 @@
 // in-memory keypair
 const keypair = await ucan.EdKeypair.create()
 const u = await ucan.build({
-  audience: audience.did(), //recipient
-  issuer: keypair, //signing key
+  audience: "did:key:zabcde...", // recipient DID
+  issuer: keypair, // signing key
   capabilities: [ // permissions for ucan
     {
-      "wnfs": "boris.fission.name/public/photos/",
-      "cap": "OVERWRITE"
+      with: { scheme: "wnfs", hierPart: "//boris.fission.name/public/photos/" },
+      can: { namespace: "wnfs", segments: [ "OVERWRITE" ] }
     },
     {
-      "wnfs": "boris.fission.name/private/4tZA6S61BSXygmJGGW885odfQwpnR2UgmCaS5CfCuWtEKQdtkRnvKVdZ4q6wBXYTjhewomJWPL2ui3hJqaSodFnKyWiPZWLwzp1h7wLtaVBQqSW4ZFgyYaJScVkBs32BThn6BZBJTmayeoA9hm8XrhTX4CGX5CVCwqvEUvHTSzAwdaR",
-      "cap": "APPEND"
+      with: { scheme: "wnfs", hierPart: "//boris.fission.name/private/4tZA6S61BSXygmJGGW885odfQwpnR2UgmCaS5CfCuWtEKQdtkRnvKVdZ4q6wBXYTjhewomJWPL2ui3hJqaSodFnKyWiPZWLwzp1h7wLtaVBQqSW4ZFgyYaJScVkBs32BThn6BZBJTmayeoA9hm8XrhTX4CGX5CVCwqvEUvHTSzAwdaR" },
+      can: { namespace: "wnfs", segments: [ "APPEND" ] }
     },
     {
-      "email": "boris@fission.codes",
-      "cap": "SEND"
+      with: { scheme: "mailto", hierPart: "boris@fission.codes" },
+      can: { namespace: "wnfs", segments: [ "SEND" ] }
     }
   ]
 })
 const token = ucan.encode(u) // base64 jwt-formatted auth token
 
 // You can also use your own signing function if you're bringing your own key management solution
-const { header, payload } = await ucan.buildParts(...)
-const u = await ucan.addSignature(header, payload, signingFn)}`;
+const payload = await ucan.buildPayload(...)
+const u = await ucan.sign(payload, keyType, signingFn)`;
 
 </script>
 
@@ -70,7 +70,7 @@ Typescript:
 
 ### Next steps
 
- * <OutboundLink href="">`ucans` library github repository</OutboundLink>
+ * <OutboundLink href="https://github.com/ucan-wg/ts-ucan">`ucans` library github repository</OutboundLink>
  * <OutboundLink href="https://github.com/ucan-wg/spec">ucan spec repository</OutboundLink>
  * <OutboundLink href="https://whitepaper.fission.codes/authorization/id-overview">Fission Whitepaper</OutboundLink>
 

@@ -41,7 +41,7 @@
   "type": "module",
   "dependencies": {
     "svelte-highlight": "^5.1.3",
-    "ucans": "https://github.com/ucan-wg/ts-ucan#e10bdeca26e663df72e4266ccd9d47f8ce100665",
+    "ucans": "https://github.com/ucan-wg/ts-ucan#978dfd28299d370daee3902ca874a582f48176ff",
     "uint8arrays": "^3.0.0"
   },
   "ava": {
