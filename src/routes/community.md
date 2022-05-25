@@ -17,6 +17,7 @@
 * <OutboundLink  href="https://github.com/nftstorage/ucan.storage">ucan.storage</OutboundLink> is a UCAN implementation for storage on <OutboundLink href="https://web3.storage/">web3.storage</OutboundLink>
 and <OutboundLink href="https://nft.storage/">nft.storage</OutboundLink>.
 * <OutboundLink  href="https://subconscious.substack.com/">Subconscious</OutboundLink> is a distributed note taking tool that <OutboundLink href="https://subconscious.substack.com/p/layered-protocols">uses UCAN as part of its layered protocol design</OutboundLink>. They are also the authors of the <OutboundLink  href="https://github.com/cdata/rs-ucan">Rust UCAN library rs-ucan</OutboundLink>.
+
 </div>
 
 <style>
