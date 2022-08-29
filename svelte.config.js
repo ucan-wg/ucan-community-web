@@ -25,6 +25,7 @@ const config = {
       assets: 'build',
       fallback: null
     }),
+    trailingSlash: 'always',
     vite: {
       optimizeDeps: {
         include: ["highlight.js/lib/core"], 
