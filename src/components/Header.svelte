@@ -25,10 +25,10 @@
   // XXX TODO: investigate how to derive this object from sveltekits internals?
   let siteNavMap = [
     { href: '/', label: 'Introduction' },
-    { href: '/validator', label: 'Validator' },
-    { href: '/learn', label: 'Learn' },
-    { href: '/community', label: 'Community' },
-    { href: '/about', label: 'About' }
+    { href: '/validator/', label: 'Validator' },
+    { href: '/learn/', label: 'Learn' },
+    { href: '/community/', label: 'Community' },
+    { href: '/about/', label: 'About' }
   ]
 
   onMount(() => {
@@ -72,7 +72,7 @@
   </HeaderUtilities>
 </Header>
 
-{#if $route.pathname === '/validator'}   
+{#if $route.pathname === '/validator/'}   
   {#if isMobileDevice}
     <SideNav bind:isOpen={isSideNavOpen}>  
       <SideNavItems>
