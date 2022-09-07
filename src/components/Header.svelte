@@ -19,7 +19,9 @@
 
   import { route } from '$lib/nav_store'
 
-  let setDevice = () => { return false }
+  let setDevice = () => {
+    return false
+  }
   let isMobileDevice: boolean
 
   // XXX TODO: investigate how to derive this object from sveltekits internals?
@@ -28,6 +30,7 @@
     { href: '/validator/', label: 'Validator' },
     { href: '/learn/', label: 'Learn' },
     { href: '/community/', label: 'Community' },
+    { href: 'https://github.com/ucan-wg/spec', label: 'Spec' },
     { href: '/about/', label: 'About' }
   ]
 
@@ -46,19 +49,21 @@
   })
 </script>
 
-<svelte:window
-  on:resize={setDevice}
-/>
+<svelte:window on:resize={setDevice} />
 
-<Header company="UCAN" platformName="Distributed Auth" href="/" bind:isSideNavOpen>
+<Header
+  company="UCAN"
+  platformName="Distributed Auth"
+  href="/"
+  bind:isSideNavOpen
+>
   <div slot="skip-to-content">
     <SkipToContent />
   </div>
 
   <HeaderNav>
-
     {#each siteNavMap as link}
-      <HeaderNavItem href="{link.href}" text="{link.label}" />
+      <HeaderNavItem href={link.href} text={link.label} />
     {/each}
   </HeaderNav>
 
@@ -72,26 +77,27 @@
   </HeaderUtilities>
 </Header>
 
-{#if $route.pathname === '/validator/'}   
+{#if $route.pathname === '/validator/'}
   {#if isMobileDevice}
-    <SideNav bind:isOpen={isSideNavOpen}>  
+    <SideNav bind:isOpen={isSideNavOpen}>
       <SideNavItems>
         {#each siteNavMap as link}
-          <SideNavLink href="{link.href}" text="{link.label}" />
+          <SideNavLink href={link.href} text={link.label} />
         {/each}
       </SideNavItems>
     </SideNav>
   {/if}
-{:else} // we are not on the validator tool page
+{:else}
+  // we are not on the validator tool page
   <SideNav bind:isOpen={isSideNavOpen}>
     <SideNavItems>
       {#if isMobileDevice}
         {#each siteNavMap as link}
-          <SideNavLink href="{link.href}" text="{link.label}" />
+          <SideNavLink href={link.href} text={link.label} />
         {/each}
         <SideNavDivider />
       {/if}
-      <SideNavMenu text="On This Page" expanded={true}></SideNavMenu>
+      <SideNavMenu text="On This Page" expanded={true} />
     </SideNavItems>
   </SideNav>
 {/if}
