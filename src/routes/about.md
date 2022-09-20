@@ -9,7 +9,7 @@
 
 # About
 
-UCANs were originally created by [Brooklyn Zelenka](https://twitter.com/expede) in 2019 as part of her work in creating a set of distributed data storage, communications and distributed computing protocols at Fission Internet Corp.
+UCANs were originally created by [Brooklyn Zelenka](https://twitter.com/expede) in 2019 as part of her work in creating a set of distributed data storage, communications and distributed computing protocols at [Fission Internet Corp](https://fission.codes).
 
 ## Links
 
