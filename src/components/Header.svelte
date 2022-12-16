@@ -30,7 +30,7 @@
     { href: '/validator/', label: 'Validator' },
     { href: '/learn/', label: 'Learn' },
     { href: '/community/', label: 'Community' },
-    { href: 'https://github.com/ucan-wg/spec', label: 'Spec' },
+    { href: 'https://github.com/ucan-wg/spec', label: 'Spec', outbound: true },
     { href: '/about/', label: 'About' }
   ]
 
@@ -63,7 +63,11 @@
 
   <HeaderNav>
     {#each siteNavMap as link}
-      <HeaderNavItem href={link.href} text={link.label} />
+      {#if link.outbound}
+        <HeaderNavItem href={link.href} text={link.label} target="_blank" />
+      {:else}
+        <HeaderNavItem href={link.href} text={link.label} />
+      {/if}
     {/each}
   </HeaderNav>
 
