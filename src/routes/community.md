@@ -9,8 +9,8 @@
 
 # Community
 
-* <OutboundLink  href="https://fission.codes/discord">Join the Fission Discord server</OutboundLink>
-* <OutboundLink  href="https://talk.fission.codes/tag/ucan">Fission Community Forum</OutboundLink>
+- <OutboundLink href="https://github.com/ucan-wg/spec/discussions">GitHub Discussions</OutboundLink>
+- <OutboundLink  href="https://fission.codes/discord">Join the Fission Discord server</OutboundLink>
 
 ## Projects that use UCAN
 
