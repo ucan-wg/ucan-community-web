@@ -24,8 +24,11 @@
     "allowJs": true,
     "checkJs": true,
     "paths": {
+      "$components": ["src/components"],
       "$components/*": ["src/components/*"],
+      "$lib":["src/lib"],
       "$lib/*": ["src/lib/*"],
+      "$static": ["static"],
       "$static/*": ["static/*"],
     }
   },
