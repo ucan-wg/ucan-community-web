@@ -130,6 +130,7 @@
               class="version-support-label"
               href="https://github.com/ucan-wg/spec/blob/a411500d005e874f3cfa4010c82dc66d40a313f2/README.md"
               target="_blank"
+              rel="noreferrer"
             >
               <Tag interactive type="blue" size="sm">Up to UCAN 0.8.1</Tag>
             </a>
@@ -272,6 +273,7 @@
           <Link
             href="https://datatracker.ietf.org/doc/html/rfc7519"
             target="_blank"
+            rel="noreferrer"
           >
             JWT RFC
           </Link>
@@ -279,6 +281,7 @@
           <Link
             href="https://whitepaper.fission.codes/access-control/ucan/jwt-authentication"
             target="_blank"
+            rel="noreferrer"
           >
             UCAN specification
           </Link>

@@ -23,20 +23,8 @@ const config = {
     adapter: adapter({
       pages: 'build',
       assets: 'build',
-      fallback: null
+      fallback: 'index.html' 
     }),
-    trailingSlash: 'always',
-    vite: {
-      optimizeDeps: {
-        include: ["highlight.js/lib/core"], 
-      },
-      resolve: {
-        alias: {
-          $components: resolve('./src/components'),
-          $static: resolve('./static')
-        }
-      },
-    }
   }
 }
 
