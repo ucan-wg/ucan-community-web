@@ -28,7 +28,7 @@ This setup has several advantages:
 * Invisible: users don't need to know that anything special is happening
 * Flexible: access can be granted as coarse or granular as the end users wants
 * Scalable: no auth server bottleneck / scales infinitely
-* Secure: military-grade encryption
+* Secure: works with RSA, ECDSA, and EdDSA and other signature schemes
 * Collaborative: users and services can delegate a subset of their access to others
 * Self-contained: the token contains all the information needed to verify it
 
