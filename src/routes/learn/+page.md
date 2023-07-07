@@ -9,7 +9,7 @@
   import { route } from '$lib/nav_store'
 
   const yarn_install = `yarn add ucans`;
-  const npm_install = `npm install --save`;
+  const npm_install = `npm install --save ucans`;
   const typscript_eg = `import * as ucan from 'ucans'
 
 // in-memory keypair
