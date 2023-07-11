@@ -9,8 +9,9 @@
 
 # Community
 
-- <OutboundLink href="https://github.com/ucan-wg/spec/discussions">GitHub Discussions</OutboundLink>
-- <OutboundLink href="https://fission.codes/discord">Join the Fission Discord Server</OutboundLink>
+- <OutboundLink href="https://github.com/ucan-wg/spec/discussions">UCAN Discussions</OutboundLink>
+- <OutboundLink href="https://discord.gg/zSfgeHhKxA">UCAN Discord Server</OutboundLink>
+- <OutboundLink href="https://lu.ma/ucan">UCAN Community Call</OutboundLink>
 
 ## Libraries
   
