@@ -70,11 +70,8 @@ Typescript:
 
 ### Next steps
 
- * <OutboundLink href="https://github.com/ucan-wg/ts-ucan">`ucans` library github repository</OutboundLink>
- * <OutboundLink href="https://github.com/ucan-wg/spec">ucan spec repository</OutboundLink>
- * <OutboundLink href="https://whitepaper.fission.codes/authorization/id-overview">Fission Whitepaper</OutboundLink>
-
- If you are using ucans in your work and have ideas for improvement, please consider adding any ideas for improvement to the UCAN Improvement Proposal repository: <OutboundLink href="https://github.com/ucan-wg/UIPs">github.com/ucan-wg/UIPs</OutboundLink>
+ * Visit the <OutboundLink href="https://github.com/ucan-wg/">UCAN Working Group organization</OutboundLink> to view libraries and specifications
+ * Read the core <OutboundLink href="https://github.com/ucan-wg/spec">UCAN specification</OutboundLink>
 
 </div>
 
