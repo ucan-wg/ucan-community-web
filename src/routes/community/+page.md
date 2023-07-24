@@ -14,11 +14,12 @@
 - <OutboundLink href="https://lu.ma/ucan">UCAN Community Call</OutboundLink>
 
 ## Libraries
-  
-- <OutboundLink href="https://github.com/ucan-wg/ts-ucan">TypeScript</OutboundLink> (<OutboundLink href="https://www.npmjs.com/package/ucans">NPM</OutboundLink>)
+
+The UCAN specification has stablized at version 0.10.0, which should be considered a 1.0.0 release candidate. Implementations are underway and contributions are welcomed. Please visit the UCAN Discord if you would like to help out!
+
 - <OutboundLink href="https://github.com/ucan-wg/rs-ucan">Rust</OutboundLink> (<OutboundLink href="https://lib.rs/crates/ucan">Crate</OutboundLink>)
-- <OutboundLink href="https://github.com/ucan-wg/go-ucan">Golang</OutboundLink>
-- <OutboundLink href="https://github.com/fission-codes/fission/tree/main/hs-ucan">Haskell</OutboundLink>
+- <OutboundLink href="https://github.com/ucan-wg/ts-ucan">TypeScript</OutboundLink> (<OutboundLink href="https://www.npmjs.com/package/@ucans/ucans">NPM</OutboundLink>)
+- <OutboundLink href="https://github.com/ipld/js-dag-ucan">IPLD</OutboundLink> (<OutboundLink href="https://www.npmjs.com/package/@ipld/dag-ucan">NPM</OutboundLink>)
   
 ## Projects that use UCAN
 
