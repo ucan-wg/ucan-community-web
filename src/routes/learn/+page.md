@@ -8,9 +8,9 @@
   import { onMount } from 'svelte'
   import { route } from '$lib/nav_store'
 
-  const yarn_install = `yarn add ucans`;
-  const npm_install = `npm install --save ucans`;
-  const typscript_eg = `import * as ucan from 'ucans'
+  const yarn_install = `yarn add @ucans/ucans`;
+  const npm_install = `npm install @ucans/ucans`;
+  const typscript_eg = `import * as ucan from '@ucans/ucans'
 
 // in-memory keypair
 const keypair = await ucan.EdKeypair.create()
