@@ -21,7 +21,7 @@
 - <OutboundLink href="https://blog.web3.storage/posts/ucan-delegation-with-w3up">UCAN Delegation with w3up - web3.storage</OutboundLink>
 - <OutboundLink href="https://blog.web3.storage/posts/intro-to-ucan">Intro to UCAN - web3.storage</OutboundLink>
 - <OutboundLink href="https://nft.storage/docs/how-to/ucan/">Use UCAN Tokens for Delegated Authorization - NFT Storage</OutboundLink>
-- <OutboundLink href="https://nft.storage/docs/how-to/ucan/">Connecting All the World’s Users in an Open Way: Decentralized Authentication with Brooklyn Zelenka - Protocol Labs</OutboundLink>
+- <OutboundLink href="https://protocol.ai/blog/transcription-brooklyn-zelenka-decentralized-authentication/">Connecting All the World’s Users in an Open Way: Decentralized Authentication with Brooklyn Zelenka - Protocol Labs</OutboundLink>
 - <OutboundLink href="https://hackmd.io/@U0QmLf-zRyyE600Km7fKIw/rJvt-j2Xo">Intro to UCAN - HackMD</OutboundLink>
 
 ### Games
