@@ -13,6 +13,7 @@
 
 ### Blog Posts
 
+- <OutboundLink href="https://fission.codes/blog/a-guide-to-ucans/">A Guide to UCANs - Fission</OutboundLink>
 - <OutboundLink href="https://fission.codes/blog/ipfs-thing-2023-ucan-decentralize-auth/">IPFS Thing 2023: Decentralizing Auth, and UCAN Too - Fission</OutboundLink>
 - <OutboundLink href="https://fission.codes/blog/cod-summit-2022-recap/">CoD Summit 2022: Decentralized Authentication - Fission</OutboundLink>
 - <OutboundLink href="https://fission.codes/blog/verifying-ucans/">Verifying UCANs - Fission</OutboundLink>
