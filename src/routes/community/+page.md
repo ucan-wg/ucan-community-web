@@ -31,9 +31,10 @@
 
 ### Talks
 
-- <OutboundLink href="https://youtu.be/MuHfrqw9gQA">Decentralizing Auth, and UCAN Too - Brooklyn Zelenka</OutboundLink>
-- <OutboundLink href="https://youtu.be/FXndHj4AKn8">Decentralized Authentication - Brooklyn Zelenka</OutboundLink>
-- <OutboundLink href="https://youtu.be/wadcTxkUKdw">Yes, UCAN with James Walker, Fission.codes, and UCAN - FLOSS Weekly</OutboundLink>
+- <OutboundLink href="https://youtu.be/-uohQzZcwF4">What's New in UCANv1 (2024) - Brooklyn Zelenka</OutboundLink>
+- <OutboundLink href="https://youtu.be/MuHfrqw9gQA">Decentralizing Auth, and UCAN Too (2023) - Brooklyn Zelenka</OutboundLink>
+- <OutboundLink href="https://youtu.be/FXndHj4AKn8">Decentralized Authentication (2023) - Brooklyn Zelenka</OutboundLink>
+- <OutboundLink href="https://youtu.be/wadcTxkUKdw">Yes, UCAN with James Walker, Fission.codes, and UCAN (2022) - FLOSS Weekly</OutboundLink>
 
 ### Community Calls
 
