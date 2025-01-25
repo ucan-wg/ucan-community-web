@@ -37,8 +37,9 @@ UCANs are all you need to sign into multiple machines, delegate access for servi
 We are making this available as a building block for developers to solve user authorization and delegation within their own applications.
 
 UCANs are used by:
-- [Web3.storage](https://web3.storage/), for delegating access to decentralized storage for thousands of developers ([blog post](https://blog.web3.storage/posts/intro-to-ucan))
-- [WNFS](https://guide.fission.codes/developers/webnative/file-system-wnfs), for access to mutable resources ([forum post](https://talk.fission.codes/t/ucans-wnfs-and-ipfs-security-broadly/1312))
+- [Storacha](https://storacha.network) (previously web3.storage), for delegating access to decentralized storage for thousands of developers ([blog post](https://blog.web3.storage/posts/intro-to-ucan))
+- [ODD SDK](https://github.com/oddsdk/ts-odd)), for access to mutable resources
+- [Awake](https://github.com/ucan-wg/awake), a mutually authenticating AKE (authenticated key exchange) for p2p applications
 - Magazine publishers, to authorize discounts across business units for millions of subscribers
 
 <h2>The UCAN data structure</h2>
